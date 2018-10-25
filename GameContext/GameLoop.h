@@ -8,6 +8,7 @@
 #include <list>
 #include "Input.h"
 #include "TimeManager.h"
+#include "../IObserver.h"
 #include <SFML/Graphics.hpp>
 
 class GameLoop {
@@ -23,7 +24,7 @@ public:
 
     void run(sf::RenderWindow*);
 
-    static unsigned int GetElapsedTime();
+    static unsigned int GetStartedTime();
 };
 
 

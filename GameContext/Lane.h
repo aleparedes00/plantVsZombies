@@ -21,7 +21,6 @@ public:
     void RemoveEntity(Character*);
     void Update();
     void Draw();
-    bool CheckDefeat();
 };
 
 

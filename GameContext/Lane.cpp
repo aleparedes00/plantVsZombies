@@ -4,6 +4,7 @@
 
 #include "Lane.h"
 #include <iterator>
+#include <iostream>
 #include "../json.hpp"
 #include "../Entities/Character.h"
 
@@ -22,6 +23,7 @@ std::list<Character *> Lane::GetEntities() const {
 
 void Lane::AddEntity(Character *entity) {
     this->gameObjects.push_back(entity);
+    std::cout << "received a new zombie !" << std::endl;
 }
 
 void Lane::RemoveEntity(Character *entity) {
@@ -40,16 +42,6 @@ void Lane::Draw() {
     for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
         (*it)->Draw();
     }
-}
-
-bool Lane::CheckDefeat() {
-    std::list<Character *>::iterator it;
-    for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
-        if ((*it)->GetX() <= 0) {
-            return true;
-        }
-    }
-    return false;
 }
 
 bool CheckDefeat() {

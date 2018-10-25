@@ -16,25 +16,30 @@
 #define LANE_NUMBER 5
 #define WAVE_DURATION 30
 
-class Scene /*: public ISerializable*/ {
+class Scene : public IObserver/*: public ISerializable*/ {
 private:
     Lane lanes[LANE_NUMBER];
     std::string data;
-    //void HandleInputs(std::list<Input*>);
+    unsigned int spawnRate;
+    unsigned int entities;
+    unsigned int wave;
     void HandleInput(Input*);
+    void SpawnMonster();
     Player* player;
+    bool defeat;
 public:
     Scene();
 
     //Scene(const std::string&);
     ~Scene();
 
-    //void Update(std::list<Input*>);
     void Update(Input*);
 
     void Draw(unsigned int);
 
     bool CheckDefeat();
+
+    void Notify(IObservable*);
 
     const Player* GetPlayer();
 

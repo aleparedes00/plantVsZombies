@@ -7,6 +7,9 @@
 
 #include "../json.hpp"
 #include "../GameContext/GameLoop.h"
+#include "../GameContext/Scene.h"
+
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -14,6 +17,7 @@ ZombieMonster::ZombieMonster()
 {
     this->life = 100;
     this->data = "ZombieMonster";
+    this->X = 5000;
 }
 
 
@@ -23,8 +27,11 @@ ZombieMonster::~ZombieMonster()
 
 void ZombieMonster::Update()
 {
-    this->X += (double)GameLoop::GetElapsedTime() / 1000;
-    this->Y += (double)GameLoop::GetElapsedTime() / 1000;
+    this->X -= 1;
+    //std::cout << "groooarrr je suis un zombie ! " << this->X << std::endl;
+    //this->Y += 1;
+    if (this->X <= 0)
+        this->NotifyAll();
 }
 
 void ZombieMonster::Draw()

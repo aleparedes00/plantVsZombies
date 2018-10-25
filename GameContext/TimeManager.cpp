@@ -34,7 +34,7 @@ void TimeManager::Update()
         t2 = t1;
     t1 = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = t1 - t2;
-    counter += elapsed.count() * 1000;
+    counter += elapsed.count() * 1000; // Time is in milliseconds : 1000 = 1 sec
 }
 
 unsigned int TimeManager::GetElapsedTime()
@@ -42,14 +42,14 @@ unsigned int TimeManager::GetElapsedTime()
     if (counter != 0)
     {
         std::chrono::duration<double> elapsed = t1 - t2;
-        return elapsed.count() * 1000;
+        return (unsigned int)elapsed.count() * 1000; // Time is returned in milliseconds : 1000 = 1 sec
     } else
         return 0;
 }
 
 unsigned int TimeManager::GetStartedTime() const
 {
-    return counter;
+    return counter; // Time is returned in milliseconds : 1000 = 1 sec
 }
 
 

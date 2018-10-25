@@ -5,7 +5,7 @@
 
 #include "Character.h"
 #include "../IObserver.h"
-
+#include <iostream>
 using namespace std;
 
 Character::Character()
@@ -23,6 +23,7 @@ void Character::NotifyAll()
     list<IObserver*>::iterator it;
     for (it = this->observers.begin(); it != this->observers.end(); it++)
         (*it)->Notify(this);
+    //std::cout << "After Character notify all" << std::endl;
 }
 
 double Character::GetX() const
@@ -40,17 +41,15 @@ int Character::GetLife() const
 void Character::SetX(double new_x)
 {
     this->X = new_x;
-    this->NotifyAll();
+    //std::cout << "After Character set x" << std::endl;
 }
 void Character::SetY(double new_y)
 {
     this->Y = new_y;
-    this->NotifyAll();
 }
 void Character::SetLife(int new_life)
 {
     this->life = new_life;
-    this->NotifyAll();
 }
 
 void Character::AddObserver(IObserver* observer)
