@@ -23,20 +23,20 @@ void GameLoop::run(sf::RenderWindow *window) {
     Scene *scene = new Scene;
     sf::Event event;
     double lag = 0.0;
-    unsigned int loops = 0;
-    double step = 1;
+    unsigned int loops = 0; // Number of loops for GAMEPLAY only, not including graphics
+    double step = 33; // DO NOT MODIFY, THIS IS THE SPEED OF THE GAME, or called time step
+    double leftover = 0; // Time left between two gameplay updates
 
     std::cout << "Starting manager" << std::endl;
     manager->Start();
-    std::cout << "step : " << step << std::endl;
+
     while (running) {
-        //std::cout << "New loop" << std::endl;
         manager->Update();
 
-        lag += manager->GetElapsedTime();
+        lag += manager->GetElapsedTime(); // Lag is the time between two frames
 
         while (window->pollEvent(event)) {
-            std::cout << "Getting event !" << std::endl;
+            //std::cout << "Getting event !" << std::endl;
             EventToInput(event);
         }
 
@@ -45,28 +45,29 @@ void GameLoop::run(sf::RenderWindow *window) {
             window->close();
         }
 
-        std::cout << "Window updated : " << (double)(lag * 1000) << " || Elapsed : " << (double)(manager->GetElapsedTime() * 1000) << std::endl;
-        while (lag > step) {
+        while (lag >= step) { // GAMEPLAY LOOP. Physics happen here at fixed time steps. This means no one calls GetElapsedTime from the Time Manager.
             scene->Update(input);
             lag -= step;
             loops++;
         }
-        std::cout << "End of loop : " << loops << std::endl;
-        //std::cout << "Window updated : " << lag << " || Elapsed : " << manager->GetElapsedTime() << std::endl;
+        leftover = lag / step; // Time left between two frames
+        //std::cout << "Graphic leftover : " << leftover << std::endl;
 
         //Graphic
 
         window->clear();
-        //scene->Draw(lag / step);
-        //std::cout << "Graphic leftover : " << (1000 * lag / step) << std::endl;
+        //scene->Draw(leftover); // Graphics are drawn using an interpolation between current and next step
         window->display();
-        running = !scene->CheckDefeat();
-        //std::cout << "End of loop : " << loops << std::endl;
-        std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000 << std::endl;
-        if (manager->GetStartedTime() > 0)
-            std::cout << "Steps per second : " << loops / (double)(manager->GetStartedTime() / 1000) << std::endl;
+        running = !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop
+
+        //std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000.0 << std::endl;
+//        if (manager->GetStartedTime() > 0)
+//            std::cout << "Steps per second : " << loops / (manager->GetStartedTime() / 1000.0) << std::endl;
+//        std::cout << "Total steps : " << loops << std::endl;
+
     }
-    std::cout << "Start : " << manager->GetStartedTime() / 1000 << std::endl;
+    std::cout << "End of the game !" << std::endl;
+    std::cout << "Seconds since Start : " << manager->GetStartedTime() / 1000 << std::endl;
     //TODO Cleanup logic ?
 }
 

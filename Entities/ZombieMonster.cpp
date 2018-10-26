@@ -17,7 +17,7 @@ ZombieMonster::ZombieMonster()
 {
     this->life = 100;
     this->data = "ZombieMonster";
-    this->X = 5000;
+    this->X = 500;
 }
 
 
@@ -29,7 +29,6 @@ void ZombieMonster::Update()
 {
     this->X -= 1;
     //std::cout << "groooarrr je suis un zombie ! " << this->X << std::endl;
-    //this->Y += 1;
     if (this->X <= 0)
         this->NotifyAll();
 }

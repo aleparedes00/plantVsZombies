@@ -26,20 +26,12 @@
 
 #include <iostream>
 #include "GameContext/GameLoop.h"
-//#include <string>
-//
-//#include "GameContext/TimeManager.h"
-//#include "Entities/AbstractEntity.h"
-//#include "Entities/Character.h"
-//#include "Entities/ZombieMonster.h"
-//#include "MonsterFactory.h"
-//#include "GameContext/Scene.h"
 
 using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     GameLoop gameLoop = GameLoop();
@@ -47,6 +39,7 @@ int main()
     while (window.isOpen())
     {
         gameLoop.run(&window);
+        window.close();
     }
 
 //    MonsterFactory *fact = new MonsterFactory;

@@ -6,6 +6,7 @@
 #define PLANTSVSZOMBIES_SCENE_H
 
 #include <list>
+#include <random>
 #include "../Entities/AbstractEntity.h"
 #include "TimeManager.h"
 #include "../ISerializable.h"
@@ -22,11 +23,14 @@ private:
     std::string data;
     unsigned int spawnRate;
     unsigned int entities;
-    unsigned int wave;
+    unsigned int remainingZombies;
+    double wave;
     void HandleInput(Input*);
     void SpawnMonster();
     Player* player;
     bool defeat;
+    std::mt19937 gen; // Generator made from seed
+    std::uniform_real_distribution<double> rng; // Generate random numbers from generator
 public:
     Scene();
 

@@ -23,7 +23,7 @@ void Character::NotifyAll()
     list<IObserver*>::iterator it;
     for (it = this->observers.begin(); it != this->observers.end(); it++)
         (*it)->Notify(this);
-    //std::cout << "After Character notify all" << std::endl;
+    std::cout << "After Character notify all" << std::endl;
 }
 
 double Character::GetX() const

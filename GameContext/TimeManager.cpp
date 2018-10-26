@@ -42,7 +42,7 @@ unsigned int TimeManager::GetElapsedTime()
     if (counter != 0)
     {
         std::chrono::duration<double> elapsed = t1 - t2;
-        return (unsigned int)elapsed.count() * 1000; // Time is returned in milliseconds : 1000 = 1 sec
+        return elapsed.count() * 1000; // Time is returned in milliseconds : 1000 = 1 sec
     } else
         return 0;
 }
