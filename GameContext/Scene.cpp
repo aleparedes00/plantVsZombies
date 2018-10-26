@@ -20,7 +20,7 @@ using json = nlohmann::json;
 Scene::Scene() {
     this->data = "scene";
     this->player = new Player;
-    this->spawnRate = 75;
+    this->spawnRate = 25;
     this->entities = 0;
     this->wave = 1;
     this->remainingZombies = 2;
@@ -58,8 +58,10 @@ void Scene::Update(Input* input) {
     for (auto &lane : lanes) {
         lane.Update();
     }
-    if (this->entities < remainingZombies)
+    if (this->entities <= remainingZombies) {
+        std::cout << "-- Trying spawn --" << std::endl;
         SpawnMonster();
+    }
     //std::cout << "After Scene update" << std::endl;
 }
 
@@ -70,8 +72,17 @@ void Scene::Draw(unsigned int leftover) {
     //std::cout << "After Scene Draw" << std::endl;
 }
 
-void Scene::Notify(IObservable* entity) {
-    this->defeat = true;
+void Scene::Notify(IObservable *iObservable) {
+    std::cout << "After Scene Notify" << std::endl;
+}
+
+void Scene::Notify(AbstractEntity *entity) {
+    std::cout << "After Scene Notify" << std::endl;
+}
+
+void Scene::Notify(Character *character) {
+    if (character->GetX() <= 0)
+     this->defeat = true;
     std::cout << "After Scene Notify" << std::endl;
 }
 
@@ -90,6 +101,7 @@ bool Scene::CheckDefeat() {
 void Scene::SpawnMonster() {
     int random_lane = (int)(rng(gen) * 5); // Generate number between 0 and 4
     int spawn = 1 + (int)(rng(gen) * 100); // Generate number between 1 and 100
+    std::cout << "Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
     if (spawn < 1 || spawn > 100)
         std::cout << "Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
     if (random_lane < 0 || random_lane > 4)

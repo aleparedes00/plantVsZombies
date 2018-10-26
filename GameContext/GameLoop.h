@@ -17,6 +17,7 @@ private:
     Input* input;
     static TimeManager *manager;
     void EventToInput(sf::Event);
+    void ButtonClick();
 public:
     GameLoop();
 

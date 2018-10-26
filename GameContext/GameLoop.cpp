@@ -16,7 +16,35 @@ GameLoop::~GameLoop() {}
 
 void GameLoop::EventToInput(sf::Event event) {
     //TODO Convert event into input
+    if (event.type == sf::Event::EventType::KeyPressed){
+        if (event.key.code == sf::Keyboard::Space){
+            std::cout << "SPAAAAAAACEEEEEEEE !!!" << std::endl;
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            std::cout << "Left" << std::endl;
+            ButtonClick();
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+            std::cout << "Right" << std::endl;
+            ButtonClick();
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)){
+            std::cout << "Middle" << std::endl;
+            ButtonClick();
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::XButton1)){
+            std::cout << "X1" << std::endl;
+            ButtonClick();
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::XButton2)){
+            std::cout << "X2" << std::endl;
+            ButtonClick();
+        } else if (event.key.code == sf::Keyboard::Escape){
+            std::cout << "Quitting !!!" << std::endl;
+            this->running = false;
+        }
+    }
     this->input = new Input;
+}
+
+void GameLoop::ButtonClick(){
+    sf::Vector2i position = sf::Mouse::getPosition();
+    std::cout << "Mouse X : " << position.x << " || Mouse Y : " << position.y << std::endl;
 }
 
 void GameLoop::run(sf::RenderWindow *window) {
@@ -58,7 +86,7 @@ void GameLoop::run(sf::RenderWindow *window) {
         window->clear();
         //scene->Draw(leftover); // Graphics are drawn using an interpolation between current and next step
         window->display();
-        running = !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop
+        running = running && !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop
 
         //std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000.0 << std::endl;
 //        if (manager->GetStartedTime() > 0)

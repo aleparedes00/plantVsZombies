@@ -45,6 +45,10 @@ public:
 
     void Notify(IObservable*);
 
+    void Notify(AbstractEntity*);
+
+    void Notify(Character*);
+
     const Player* GetPlayer();
 
     //std::string &Serialize();

@@ -21,7 +21,20 @@ std::list<Character *> Lane::GetEntities() const {
     return this->gameObjects;
 }
 
+void Lane::Notify(IObservable *observable) {
+
+}
+
+void Lane::Notify(AbstractEntity *entity) {
+
+}
+
+void Lane::Notify(Character *character) {
+
+}
+
 void Lane::AddEntity(Character *entity) {
+    entity->AddObserver(this);
     this->gameObjects.push_back(entity);
     std::cout << "received a new zombie !" << std::endl;
 }
