@@ -19,8 +19,6 @@ protected:
     double X, Y, speed;
     int life;
     virtual void NotifyAll();
-    virtual void CheckEndGame();
-    virtual void CheckDeath();
 public:
     Character();
     virtual ~Character() = 0;
@@ -30,7 +28,6 @@ public:
     virtual void SetX(double);
     virtual void SetY(double);
     virtual void SetLife(int);
-    virtual void Update();
     virtual void AddObserver(IObserver*);
     virtual void RemoveObserver(IObserver*);
     virtual std::string& Serialize();

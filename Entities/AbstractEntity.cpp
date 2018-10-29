@@ -17,6 +17,6 @@ void AbstractEntity::Update()
 {
 }
 
-void AbstractEntity::Draw()
+void AbstractEntity::Draw(double leftover, sf::RenderWindow &window)
 {
 }

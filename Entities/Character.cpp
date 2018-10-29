@@ -52,24 +52,6 @@ void Character::SetLife(int new_life)
     this->life = new_life;
 }
 
-void Character::CheckDeath() {
-    if (this->life <= 0) {
-        std::cout << "groooarrr je mourru ! " << this->life << std::endl;
-        this->NotifyAll();
-    }
-}
-
-void Character::CheckEndGame() {
-    if (this->X <= 0) {
-        std::cout << "groooarrr je te mange ! " << this->X << std::endl;
-        this->NotifyAll();
-    }
-}
-
-void Character::Update() {
-    this->X -= this->speed;
-}
-
 void Character::AddObserver(IObserver* observer)
 {
     this->observers.push_back(observer);

@@ -13,17 +13,18 @@
 
 class GameLoop {
 private:
+    sf::RenderWindow *window;
     bool running;
     Input* input;
     static TimeManager *manager;
     void EventToInput(sf::Event);
     void ButtonClick();
 public:
-    GameLoop();
+    GameLoop(sf::RenderWindow&);
 
     ~GameLoop();
 
-    void run(sf::RenderWindow*);
+    void run();
 
     static unsigned int GetStartedTime();
 };

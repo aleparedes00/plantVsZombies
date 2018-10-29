@@ -7,6 +7,7 @@
 
 #include <list>
 #include <random>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "../Entities/AbstractEntity.h"
 #include "TimeManager.h"
 #include "../ISerializable.h"
@@ -16,6 +17,8 @@
 
 #define LANE_NUMBER 5
 #define WAVE_DURATION 30
+
+class Player;
 
 class Scene : public IObserver/*: public ISerializable*/ {
 private:
@@ -27,8 +30,10 @@ private:
     double wave;
     void HandleInput(Input*);
     void SpawnMonster();
+    void SpawnSun();
     Player* player;
     bool defeat;
+    bool fullLanes;
     std::mt19937 gen; // Generator made from seed
     std::uniform_real_distribution<double> rng; // Generate random numbers from generator
 public:
@@ -37,9 +42,9 @@ public:
     //Scene(const std::string&);
     ~Scene();
 
-    void Update(Input*);
+    void Update(Input&);
 
-    void Draw(unsigned int);
+    void Draw(double, sf::RenderWindow&);
 
     bool CheckDefeat();
 

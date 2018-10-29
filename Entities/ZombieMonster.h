@@ -9,11 +9,14 @@
 
 class ZombieMonster: public Character
 {
+private:
+    void CheckDeath();
+    void CheckEndGame();
 public:
     ZombieMonster();
     ~ZombieMonster();
     void Update();
-    void Draw();
+    void Draw(double, sf::RenderWindow&);
     std::string& Serialize();
 };
 

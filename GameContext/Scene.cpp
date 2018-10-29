@@ -8,10 +8,11 @@
 #include <iostream>
 #include <random>
 #include <math.h>
+#include "GameLoop.h"
 #include "../json.hpp"
 #include "../MonsterFactory.h"
-#include "GameLoop.h"
 #include "../Entities/ZombieMonster.h"
+#include "../Entities/Player.h"
 
 #define TIME_BETWEEN_WAVES 5
 #define TIME_BEFORE_SPAWNRATE_INCREASE 5
@@ -19,7 +20,6 @@ using json = nlohmann::json;
 
 Scene::Scene() {
     this->data = "scene";
-    this->player = new Player;
     this->spawnRate = 25;
     this->entities = 0;
     this->wave = 1;
@@ -28,6 +28,11 @@ Scene::Scene() {
     std::random_device rd;
     this->gen = std::mt19937(rd());
     this->rng = std::uniform_real_distribution<double>();
+    this->player = new Player(this);
+    this->fullLanes = false;
+    for (int i; i < LANE_NUMBER; i++){
+        lanes[i].SetNumber(i);
+    }
 }
 
 //Scene::Scene(const std::string& serials) {
@@ -45,7 +50,7 @@ Scene::Scene() {
 
 Scene::~Scene() {}
 
-void Scene::Update(Input* input) {
+void Scene::Update(Input &input) {
 //    if ((this->spawnRate + 3) / 5 < (GameLoop::GetStartedTime() / 1000) / TIME_BEFORE_SPAWNRATE_INCREASE){
 //        this->spawnRate += 5;
 //        std::cout << "SpawnRate increasing ! : " << this->spawnRate << std::endl;
@@ -55,35 +60,38 @@ void Scene::Update(Input* input) {
         this->wave++;
         std::cout << "Starting wave : " << this->wave << " with " << std::pow(2, this->wave) << " max entities" <<std::endl;
     }
+    fullLanes = true;
     for (auto &lane : lanes) {
-        lane.Update();
+        lane.Update(input);
+        fullLanes = lane.IsFull() && fullLanes;
     }
     if (this->entities <= remainingZombies) {
         std::cout << "-- Trying spawn --" << std::endl;
         SpawnMonster();
     }
+    SpawnSun();
     //std::cout << "After Scene update" << std::endl;
 }
 
-void Scene::Draw(unsigned int leftover) {
+void Scene::Draw(double leftover, sf::RenderWindow& window) {
     for (auto &lane : lanes) {
-        lane.Draw();
+        lane.Draw(leftover, window);
     }
     //std::cout << "After Scene Draw" << std::endl;
 }
 
 void Scene::Notify(IObservable *iObservable) {
-    std::cout << "After Scene Notify" << std::endl;
+    std::cout << "After Scene iobservable Notify" << std::endl;
 }
 
 void Scene::Notify(AbstractEntity *entity) {
-    std::cout << "After Scene Notify" << std::endl;
+    std::cout << "After Scene abstract Notify" << std::endl;
 }
 
 void Scene::Notify(Character *character) {
     if (character->GetX() <= 0)
      this->defeat = true;
-    std::cout << "After Scene Notify" << std::endl;
+    std::cout << "After Scene character Notify" << std::endl;
 }
 
 const Player* Scene::GetPlayer(){
@@ -109,7 +117,6 @@ void Scene::SpawnMonster() {
     if (spawn <= this->spawnRate) {
         std::cout << "Spawning new zombie in lane " << random_lane << std::endl;
         ZombieMonster *zombie = new ZombieMonster;
-        zombie->SetY(random_lane * 50 + 10);
         zombie->AddObserver(this);
         std::cout << "Just before lane assignation " << random_lane << std::endl;
         lanes[random_lane].AddEntity(zombie);
@@ -117,6 +124,24 @@ void Scene::SpawnMonster() {
         this->remainingZombies--;
         std::cout << "Entities : " << this->entities << std::endl;
         std::cout << "Remaining zombies : " << this->remainingZombies << std::endl;
+    }
+}
+
+void Scene::SpawnSun() {
+    int random_lane = (int)(rng(gen) * 5); // Generate number between 0 and 4
+    int random_cell = (int)(rng(gen) * 9); // Generate number between 0 and 8
+    int spawn = 1 + (int)(rng(gen) * 100); // Generate number between 1 and 100
+    if (!fullLanes && spawn <= 5) {
+        while (lanes[random_lane].HasSun(random_cell)) {
+            random_lane = (int)(rng(gen) * 5); // Generate number between 0 and 4
+            random_cell = (int)(rng(gen) * 9); // Generate number between 0 and 8
+        }
+        if (random_cell < 0 || random_cell > 8)
+            std::cout << "Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
+        if (random_lane < 0 || random_lane > 4)
+            std::cout << "Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
+        lanes[random_lane].CreateSun(random_cell);
+        std::cout << "Spawning new sun in lane " << random_lane << " at cell " << random_cell << std::endl;
     }
 }
 

@@ -6,8 +6,22 @@
 #define PLANTSVSZOMBIES_PLAYER_H
 
 
-class Player {
+#include "../GameContext/Scene.h"
 
+class Scene;
+
+class Player {
+private:
+    int suns;
+    Scene *scene;
+    bool RemoveSuns(const int);
+    void CreateEntity();
+    void AddSuns(const int);
+
+public:
+    Player(Scene*);
+    ~Player();
+    void HandleInput(Input *input);
 };
 
 
