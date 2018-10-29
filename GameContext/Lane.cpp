@@ -49,7 +49,7 @@ void Lane::RemoveEntity(Character *entity) {
     this->gameObjects.remove(entity);
 }
 
-void Lane::Update(Input &input) {
+void Lane::Update() {
     std::list<Character *>::iterator it;
     for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
         (*it)->Update();
@@ -57,7 +57,7 @@ void Lane::Update(Input &input) {
 }
 
 void Lane::Draw(double leftover, sf::RenderWindow &window) {
-    for (int i = 0; i < TILE_NUMBER; i++) {
+    for (int i = 0; i < CELL_NUMBER; i++) {
         sf::RectangleShape rectangle(sf::Vector2f(30.f, 30.f)); // TEMPORARY, need merging !
         rectangle.setOutlineThickness(5.f);
         rectangle.setOutlineColor(sf::Color::Green);
@@ -68,7 +68,7 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
         if (cells[i].sun) {
             sf::CircleShape circle(15.f); // TEMPORARY, need merging !
             circle.setOutlineThickness(5.f);
-            circle.setOutlineColor(sf::Color::Yellow);
+            circle.setOutlineColor(sf::Color::Magenta);
             circle.setPosition(i * 50 + 20, number * 50 + Y_OFFSET);
 //          std::cout << "position x : " << rectangle.getPosition().x << std::endl;
 //          std::cout << "position y : " << rectangle.getPosition().y << std::endl;
@@ -81,8 +81,19 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
     }
 }
 
+
+void Lane::HandleInput(Input &input) {
+    unsigned int cellNumber = (input.GetX() - X_OFFSET) / CELL_NUMBER;
+    std::cout << "Cell number from input : " << cellNumber << std::endl;
+    if (cellNumber >= 0 && cellNumber < CELL_NUMBER){
+        cells[cellNumber].sun = false;
+        cells[cellNumber].empty = true;
+    }
+}
+
 void Lane::CreateSun(unsigned int position) {
     cells[position].sun = true;
+    cells[position].empty = false;
 }
 
 bool Lane::HasSun(unsigned int position) {

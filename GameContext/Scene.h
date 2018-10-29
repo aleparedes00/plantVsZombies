@@ -17,6 +17,9 @@
 
 #define LANE_NUMBER 5
 #define WAVE_DURATION 30
+#define LANE_WIDTH 450
+#define LANE_HEIGHT 50
+#define Y_OFFSET_BEFORE_LANE 130
 
 class Player;
 
@@ -28,7 +31,7 @@ private:
     unsigned int entities;
     unsigned int remainingZombies;
     double wave;
-    void HandleInput(Input*);
+    void HandleInput(Input&);
     void SpawnMonster();
     void SpawnSun();
     Player* player;

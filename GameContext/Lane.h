@@ -12,12 +12,13 @@
 #include "../IObserver.h"
 #include "Input.h"
 
-#define TILE_NUMBER 9
+#define CELL_NUMBER 9
 #define CELL_X_SIZE 50
 #define CELL_Y_SIZE 50
 #define SUN_X_SIZE 20
 #define SUN_Y_SIZE 20
 #define Y_OFFSET 130
+#define X_OFFSET 0
 
 struct CELL {
     bool sun = false;
@@ -30,7 +31,7 @@ private:
     bool full;
     std::list<Character*> gameObjects;
     std::string data;
-    CELL cells[TILE_NUMBER];
+    CELL cells[CELL_NUMBER];
     void RemoveEntity(Character*);
     void Notify(IObservable*);
     void Notify(AbstractEntity*);
@@ -41,8 +42,9 @@ public:
     void SetNumber(const unsigned int);
     std::list<Character*> GetEntities() const;
     void AddEntity(Character*);
-    void Update(Input&);
+    void Update();
     void Draw(double, sf::RenderWindow&);
+    void HandleInput(Input&);
     void CreateSun(unsigned int);
     bool HasSun(unsigned int);
     bool IsFull();

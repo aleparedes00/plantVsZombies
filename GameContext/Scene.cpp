@@ -55,6 +55,7 @@ void Scene::Update(Input &input) {
 //        this->spawnRate += 5;
 //        std::cout << "SpawnRate increasing ! : " << this->spawnRate << std::endl;
 //    }
+    this->HandleInput(input);
     if (this->wave < (GameLoop::GetStartedTime() / 1000.0) / TIME_BETWEEN_WAVES){
         this->remainingZombies += pow(2, this->wave);
         this->wave++;
@@ -62,11 +63,10 @@ void Scene::Update(Input &input) {
     }
     fullLanes = true;
     for (auto &lane : lanes) {
-        lane.Update(input);
+        lane.Update();
         fullLanes = lane.IsFull() && fullLanes;
     }
     if (this->entities <= remainingZombies) {
-        std::cout << "-- Trying spawn --" << std::endl;
         SpawnMonster();
     }
     SpawnSun();
@@ -90,7 +90,7 @@ void Scene::Notify(AbstractEntity *entity) {
 
 void Scene::Notify(Character *character) {
     if (character->GetX() <= 0)
-     this->defeat = true;
+        this->defeat = true;
     std::cout << "After Scene character Notify" << std::endl;
 }
 
@@ -98,8 +98,11 @@ const Player* Scene::GetPlayer(){
     return this->player;
 }
 
-void Scene::HandleInput(Input *) {
-    return;
+void Scene::HandleInput(Input &input) {
+    unsigned int laneNumber = (input.GetY() - Y_OFFSET_BEFORE_LANE) / LANE_NUMBER;
+    std::cout << "Lane number from input : " << laneNumber << std::endl;
+    if (laneNumber >= 0 && laneNumber < LANE_NUMBER)
+        lanes[laneNumber].HandleInput(input);
 }
 
 bool Scene::CheckDefeat() {

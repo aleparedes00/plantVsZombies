@@ -28,20 +28,16 @@ void GameLoop::EventToInput(sf::Event event) {
     } else if (event.type == sf::Event::EventType::MouseButtonPressed) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             std::cout << "Left" << std::endl;
-            ButtonClick();
-        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+            this->input = new Input(Types::ButtonPressed, sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+        } /*else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
             std::cout << "Right" << std::endl;
-            ButtonClick();
         } else if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)){
             std::cout << "Middle" << std::endl;
-            ButtonClick();
         } else if (sf::Mouse::isButtonPressed(sf::Mouse::XButton1)){
             std::cout << "X1" << std::endl;
-            ButtonClick();
         } else if (sf::Mouse::isButtonPressed(sf::Mouse::XButton2)){
             std::cout << "X2" << std::endl;
-            ButtonClick();
-        }
+        } */
     } else if (event.type == sf::Event::EventType::TouchBegan) {
         std::cout << "Touch began" << std::endl;
     } else if (event.type == sf::Event::EventType::TouchEnded) {
@@ -49,13 +45,13 @@ void GameLoop::EventToInput(sf::Event event) {
     } else if (event.type == sf::Event::EventType::TouchMoved) {
         std::cout << "Touch moved" << std::endl;
     }
-    this->input = new Input;
+    this->input = new Input(Types::ButtonUp, sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
-void GameLoop::ButtonClick(){
-    sf::Vector2i position = sf::Mouse::getPosition(*(window));
-    std::cout << "Mouse X : " << position.x << " || Mouse Y : " << position.y << std::endl;
-}
+//void GameLoop::ButtonClick(){
+//    sf::Vector2i position = sf::Mouse::getPosition(*(window));
+//    std::cout << "Mouse X : " << position.x << " || Mouse Y : " << position.y << std::endl;
+//}
 
 void GameLoop::run() {
     Scene *scene = new Scene;

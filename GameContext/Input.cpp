@@ -3,3 +3,25 @@
 //
 
 #include "Input.h"
+
+Input::Input(Types type, const unsigned int X, const unsigned int Y) {
+    this->type = type;
+    this->X = X;
+    this->Y = Y;
+}
+
+Input::~Input() {
+
+}
+
+Types Input::GetType() {
+    return this->type;
+}
+
+const unsigned int Input::GetX() {
+    return this->X;
+}
+
+const unsigned int Input::GetY() {
+    return this->Y;
+}
