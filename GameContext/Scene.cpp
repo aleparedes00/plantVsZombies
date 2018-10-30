@@ -31,8 +31,10 @@ Scene::Scene() {
     this->player = new Player(this);
     this->fullLanes = false;
     for (int i; i < LANE_NUMBER; i++){
+        std::cout << "Setting number for lane : " << i << std::endl;
         lanes[i].SetNumber(i);
     }
+    std::cout << "Finished initialization for Scene" << std::endl; // PLOT TWIST : If you remove this lane, everything stops working
 }
 
 //Scene::Scene(const std::string& serials) {
@@ -56,6 +58,7 @@ void Scene::Update(Input &input) {
 //        std::cout << "SpawnRate increasing ! : " << this->spawnRate << std::endl;
 //    }
     this->HandleInput(input);
+    this->player->SetInput(input);
     if (this->wave < (GameLoop::GetStartedTime() / 1000.0) / TIME_BETWEEN_WAVES){
         this->remainingZombies += pow(2, this->wave);
         this->wave++;
@@ -77,6 +80,7 @@ void Scene::Draw(double leftover, sf::RenderWindow& window) {
     for (auto &lane : lanes) {
         lane.Draw(leftover, window);
     }
+    player->Draw(leftover, window);
     //std::cout << "After Scene Draw" << std::endl;
 }
 
@@ -99,8 +103,8 @@ const Player* Scene::GetPlayer(){
 }
 
 void Scene::HandleInput(Input &input) {
-    unsigned int laneNumber = (input.GetY() - Y_OFFSET_BEFORE_LANE) / LANE_NUMBER;
-    std::cout << "Lane number from input : " << laneNumber << std::endl;
+    int laneNumber = (input.GetY() - Y_OFFSET_BEFORE_LANE) / LANE_NUMBER;
+    //std::cout << "Lane number from input : " << laneNumber << std::endl;
     if (laneNumber >= 0 && laneNumber < LANE_NUMBER)
         lanes[laneNumber].HandleInput(input);
 }

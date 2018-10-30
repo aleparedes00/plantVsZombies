@@ -19,6 +19,7 @@ Lane::Lane() {
 Lane::~Lane() {}
 
 void Lane::SetNumber(const unsigned int number) {
+    std::cout << "Received number for lane : " << number << std::endl;
     this->number = number;
 }
 
@@ -79,6 +80,7 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
     for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
         (*it)->Draw(leftover, window);
     }
+    //std::cout << "Drawing lane : " << number << std::endl;
 }
 
 

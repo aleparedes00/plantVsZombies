@@ -100,8 +100,8 @@ void GameLoop::run() {
         window->clear();
 
 
-//        if (thing > 0) {
-//            double fps = 1000.0 / thing;
+//        if (deltaTime > 0) {
+//            double fps = 1000.0 / deltaTime;
 //            std::string toast = "FPS : " + std::to_string(fps);
 //            text.setString(toast);
 //            window->draw(text);

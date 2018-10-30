@@ -7,6 +7,7 @@
 
 
 #include "../GameContext/Scene.h"
+#include <SFML/Graphics.hpp>
 
 class Scene;
 
@@ -17,11 +18,13 @@ private:
     bool RemoveSuns(const int);
     void CreateEntity();
     void AddSuns(const int);
-
+    Input *input;
 public:
     Player(Scene*);
     ~Player();
     void HandleInput(Input *input);
+    void Draw(double, sf::RenderWindow&);
+    void SetInput(Input&);
 };
 
 
