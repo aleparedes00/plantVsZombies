@@ -5,6 +5,7 @@
 #ifndef PLANTSVSZOMBIES_ZOMBIEMONSTER_H
 #define PLANTSVSZOMBIES_ZOMBIEMONSTER_H
 
+#include <Graphics/ModelSprite.hh>
 #include "Character.h"
 
 class ZombieMonster: public Character
@@ -12,12 +13,13 @@ class ZombieMonster: public Character
 private:
     void CheckDeath();
     void CheckEndGame();
+    ModelSprite *sprite;
 public:
     ZombieMonster();
     ~ZombieMonster();
     void Update();
     void Draw(double, sf::RenderWindow&);
-    std::string& Serialize();
+    //std::string& Serialize();
 };
 
 
