@@ -14,12 +14,8 @@
 #include "Lane.h"
 #include "Input.h"
 #include "../Entities/Player.h"
+#include "../Config.h"
 
-#define LANE_NUMBER 5
-#define WAVE_DURATION 30
-#define LANE_WIDTH 450
-#define LANE_HEIGHT 50
-#define Y_OFFSET_BEFORE_LANE 130
 
 class Player;
 

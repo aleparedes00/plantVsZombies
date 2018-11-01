@@ -18,10 +18,10 @@ Types Input::GetType() {
     return this->type;
 }
 
-const unsigned int Input::GetX() {
+unsigned int Input::GetX() {
     return this->X;
 }
 
-const unsigned int Input::GetY() {
+unsigned int Input::GetY() {
     return this->Y;
 }

@@ -30,11 +30,9 @@ Scene::Scene() {
     this->rng = std::uniform_real_distribution<double>();
     this->player = new Player(this);
     this->fullLanes = false;
-    for (int i; i < LANE_NUMBER; i++){
-        std::cout << "Setting number for lane : " << i << std::endl;
+    for (int i = 0; i < LANE_NUMBER; i++){
         lanes[i].SetNumber(i);
     }
-    std::cout << "Finished initialization for Scene" << std::endl; // PLOT TWIST : If you remove this lane, everything stops working
 }
 
 //Scene::Scene(const std::string& serials) {
@@ -103,10 +101,12 @@ const Player* Scene::GetPlayer(){
 }
 
 void Scene::HandleInput(Input &input) {
-    int laneNumber = (input.GetY() - Y_OFFSET_BEFORE_LANE) / LANE_NUMBER;
-    //std::cout << "Lane number from input : " << laneNumber << std::endl;
-    if (laneNumber >= 0 && laneNumber < LANE_NUMBER)
+    unsigned int laneNumber = (input.GetY() - Y_OFFSET_BEFORE_LANE) / LANE_NUMBER;
+    if (laneNumber < LANE_NUMBER)
         lanes[laneNumber].HandleInput(input);
+    else {
+        std::cout << "Lane number from input : " << laneNumber << std::endl;
+    }
 }
 
 bool Scene::CheckDefeat() {

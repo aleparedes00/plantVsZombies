@@ -57,6 +57,8 @@ void ZombieMonster::Draw(double leftover, sf::RenderWindow &window)
 //    std::cout << "position x : " << rectangle.getPosition().x << std::endl;
 //    std::cout << "position y : " << rectangle.getPosition().y << std::endl;
     window.draw(rectangle);
+
+    // this->Model.draw(this, leftover, window); // this -> gives position / leftover -> time before next update / window -> to draw
 }
 
 std::string& ZombieMonster::Serialize()

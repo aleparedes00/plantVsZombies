@@ -22,8 +22,8 @@ public:
     Input(Types, unsigned int, unsigned int);
     ~Input();
     Types GetType();
-    const unsigned int GetX();
-    const unsigned int GetY();
+    unsigned int GetX();
+    unsigned int GetY();
 };
 
 

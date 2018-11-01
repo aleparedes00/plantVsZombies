@@ -58,15 +58,20 @@ void GameLoop::run() {
     sf::Event event;
     double lag = 0.0;
     unsigned int loops = 0; // Number of loops for GAMEPLAY only, not including graphics
+    unsigned int totalLooops = 0; // Total of graphic loops
     const double step = 33; // DO NOT MODIFY, THIS IS THE SPEED OF THE GAME, or called time step
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
 
-//    sf::Font font;
-//    font.loadFromFile("impact.ttf");
-//    sf::Text text("hello", font);
+    sf::Font font;
+//    sf::Text text;
+//    if (!font.loadFromFile("impact.ttf")) {
+//        text.setFont(font);
+//    }
+//    text.setString("Hello world");
+//    text.setFillColor(sf::Color::Red);
+//    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 //    text.setCharacterSize(24);
-//    text.setFont(font);
 //    text.setPosition(400, 20);
 
     std::cout << "Starting manager" << std::endl;
@@ -103,20 +108,24 @@ void GameLoop::run() {
 //        if (deltaTime > 0) {
 //            double fps = 1000.0 / deltaTime;
 //            std::string toast = "FPS : " + std::to_string(fps);
-//            text.setString(toast);
+//            text.setString("Hello");
 //            window->draw(text);
 //        }
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
         window->display();
         running = running && !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop
 
-        //std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000.0 << std::endl;
+//        std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000.0 << std::endl;
 //        if (manager->GetStartedTime() > 0)
 //            std::cout << "Steps per second : " << loops / (manager->GetStartedTime() / 1000.0) << std::endl;
 //        std::cout << "Total steps : " << loops << std::endl;
+
+        totalLooops++;
     }
     std::cout << "End of the game !" << std::endl;
     std::cout << "Seconds since Start : " << manager->GetStartedTime() / 1000 << std::endl;
+    std::cout << "Steps per second since start : " << loops / (manager->GetStartedTime() / 1000) << std::endl;
+    std::cout << "Frames per second since start : " << totalLooops / (manager->GetStartedTime() / 1000) << std::endl;
     std::cout << "Debug" << std::endl;
     //TODO Cleanup logic ?
 }

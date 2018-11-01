@@ -11,14 +11,7 @@
 #include "../Entities/Character.h"
 #include "../IObserver.h"
 #include "Input.h"
-
-#define CELL_NUMBER 9
-#define CELL_X_SIZE 50
-#define CELL_Y_SIZE 50
-#define SUN_X_SIZE 20
-#define SUN_Y_SIZE 20
-#define Y_OFFSET 130
-#define X_OFFSET 0
+#include "../Config.h"
 
 struct CELL {
     bool sun = false;

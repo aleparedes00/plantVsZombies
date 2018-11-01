@@ -2,10 +2,11 @@
 #include <iostream>
 
 #include "GameContext/GameLoop.h"
+#include "Config.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "Starting the game !");
+    sf::RenderWindow window(sf::VideoMode(X_RESOLUTION, Y_RESOLUTION), "Starting the game !");
     GameLoop gameLoop = GameLoop(window);
     gameLoop.run();
     std::cout << "Exited gameloop" << std::endl;

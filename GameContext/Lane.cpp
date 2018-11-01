@@ -36,7 +36,8 @@ void Lane::Notify(AbstractEntity *entity) {
 }
 
 void Lane::Notify(Character *character) {
-
+    if (character->GetLife() <= 0)
+        this->RemoveEntity(character);
 }
 
 void Lane::AddEntity(Character *entity) {
@@ -86,10 +87,11 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
 
 void Lane::HandleInput(Input &input) {
     unsigned int cellNumber = (input.GetX() - X_OFFSET) / CELL_NUMBER;
-    std::cout << "Cell number from input : " << cellNumber << std::endl;
-    if (cellNumber >= 0 && cellNumber < CELL_NUMBER){
+    if (cellNumber < CELL_NUMBER){
         cells[cellNumber].sun = false;
         cells[cellNumber].empty = true;
+    } else {
+        std::cout << "Cell number from input : " << cellNumber << std::endl;
     }
 }
 
