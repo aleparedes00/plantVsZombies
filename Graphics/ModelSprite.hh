@@ -10,19 +10,19 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "ISprite.hh"
 
-class ModelSprite: public ISprite {
+
+class ModelSprite {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
+
 
 public:
     ModelSprite(std::string data, float positionX, float positionY);
     ~ModelSprite();
     void SetPosition(float X, float Y);
     void Draw(double, sf::RenderWindow&);
-    void GetTextureInformation();
 };
 
 

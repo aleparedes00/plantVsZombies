@@ -29,4 +29,7 @@
 #define Y_OFFSET 130
 #define X_OFFSET 0
 
+// Graphics files
+#define ZOMBIE_FILE "../Graphics/Resources/Images/zombie2.png"
+
 #endif //PLANTSVSZOMBIES_CONFIG_H

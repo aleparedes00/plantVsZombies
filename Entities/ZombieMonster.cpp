@@ -53,7 +53,6 @@ void ZombieMonster::Update()
 void ZombieMonster::Draw(double leftover, sf::RenderWindow &window)
 {
     this->sprite->SetPosition((this->X - (speed * leftover)), this->Y); //TODO I need float, this is double, Is that safe?
-    this->sprite->GetTextureInformation();
 //    sf::RectangleShape rectangle(sf::Vector2f(20.f, 20.f)); // TEMPORARY, need merging !
 //    rectangle.setOutlineThickness(5.f);
 //    rectangle.setOutlineColor(sf::Color(255, 0, 0));

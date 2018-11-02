@@ -6,6 +6,7 @@
 #include <iterator>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <Graphics/ModelSprite.hh>
 #include "../json.hpp"
 #include "../Entities/Character.h"
 
@@ -68,13 +69,14 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
 //    std::cout << "position y : " << rectangle.getPosition().y << std::endl;
         window.draw(rectangle);
         if (cells[i].sun) {
-            sf::CircleShape circle(15.f); // TEMPORARY, need merging !
-            circle.setOutlineThickness(5.f);
-            circle.setOutlineColor(sf::Color::Magenta);
-            circle.setPosition(i * 50 + 20, number * 50 + Y_OFFSET);
+            ModelSprite *sprite = new ModelSprite("sun", i * 50 + 20, number * 50 + Y_OFFSET);
+//            sf::CircleShape circle(15.f); // TEMPORARY, need merging !
+//            circle.setOutlineThickness(5.f);
+//            circle.setOutlineColor(sf::Color::Magenta);
+//            circle.setPosition(i * 50 + 20, number * 50 + Y_OFFSET);
 //          std::cout << "position x : " << rectangle.getPosition().x << std::endl;
 //          std::cout << "position y : " << rectangle.getPosition().y << std::endl;
-            window.draw(circle);
+            sprite->Draw(leftover, window);
         }
     }
     std::list<Character *>::iterator it;
