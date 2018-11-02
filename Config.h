@@ -31,5 +31,6 @@
 
 // Graphics files
 #define ZOMBIE_FILE "../Graphics/Resources/Images/zombie2.png"
+#define SUN_FILE "../Graphics/Resources/Images/sun.png"
 
 #endif //PLANTSVSZOMBIES_CONFIG_H

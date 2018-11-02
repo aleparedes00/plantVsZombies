@@ -14,9 +14,10 @@
 
 class ModelSprite {
 private:
+    std::string type;
     sf::Texture texture;
     sf::Sprite sprite;
-
+    void SetSprite(std::string file);
 
 public:
     ModelSprite(std::string data, float positionX, float positionY);
