@@ -17,6 +17,7 @@ private:
     std::string type;
     sf::Texture texture;
     sf::Sprite sprite;
+
     void SetSprite(std::string file);
 
 public:
