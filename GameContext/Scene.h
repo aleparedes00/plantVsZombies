@@ -23,7 +23,7 @@ class Scene : public IObserver/*: public ISerializable*/ {
 private:
     Lane lanes[LANE_NUMBER];
     std::string data;
-    unsigned int spawnRate;
+    double nextZombieSpawn;
     unsigned int entities;
     unsigned int remainingZombies;
     double wave;

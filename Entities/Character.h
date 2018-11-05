@@ -24,9 +24,11 @@ public:
     virtual ~Character() = 0;
     virtual double GetX() const;
     virtual double GetY() const;
+    virtual double GetSpeed() const;
     virtual int GetLife() const;
     virtual void SetX(double);
     virtual void SetY(double);
+    virtual void SetSpeed(double);
     virtual void SetLife(int);
     virtual void AddObserver(IObserver*);
     virtual void RemoveObserver(IObserver*);

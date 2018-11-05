@@ -12,6 +12,7 @@
 #include "../IObserver.h"
 #include "Input.h"
 #include "../Config.h"
+#include "../Graphics/ModelSprite.hh"
 
 struct CELL {
     bool sun = false;
@@ -22,6 +23,7 @@ class Lane : public IObserver{
 private:
     unsigned int number;
     bool full;
+    static ModelSprite* sunSprite;
     std::list<Character*> gameObjects;
     std::string data;
     CELL cells[CELL_NUMBER];
@@ -41,6 +43,8 @@ public:
     void CreateSun(unsigned int);
     bool HasSun(unsigned int);
     bool IsFull();
+    unsigned int GetEntitiesNumber();
+    unsigned int GetLaneLumber();
 };
 
 

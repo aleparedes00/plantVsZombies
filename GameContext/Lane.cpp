@@ -6,11 +6,13 @@
 #include <iterator>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <Graphics/ModelSprite.hh>
+#include "../Graphics/ModelSprite.hh"
 #include "../json.hpp"
 #include "../Entities/Character.h"
 
 using json = nlohmann::json;
+
+ModelSprite *Lane::sunSprite = new ModelSprite("sun", 0, 0);
 
 Lane::Lane() {
     this->gameObjects = std::list<Character *>();
@@ -43,9 +45,8 @@ void Lane::Notify(Character *character) {
 
 void Lane::AddEntity(Character *entity) {
     entity->AddObserver(this);
-    entity->SetY(number * 50 + Y_OFFSET);
+    entity->SetY(number * 80 + Y_OFFSET);
     this->gameObjects.push_back(entity);
-    std::cout << "received a new zombie !" << std::endl;
 }
 
 void Lane::RemoveEntity(Character *entity) {
@@ -61,22 +62,13 @@ void Lane::Update() {
 
 void Lane::Draw(double leftover, sf::RenderWindow &window) {
     for (int i = 0; i < CELL_NUMBER; i++) {
-        sf::RectangleShape rectangle(sf::Vector2f(30.f, 30.f)); // TEMPORARY, need merging !
-        rectangle.setOutlineThickness(5.f);
+        sf::RectangleShape rectangle(sf::Vector2f(50.f, 50.f)); // TEMPORARY, need merging !
+        rectangle.setOutlineThickness(8.f);
         rectangle.setOutlineColor(sf::Color::Green);
-        rectangle.setPosition(i * 50 + 20, number * 50 + Y_OFFSET);
-//    std::cout << "position x : " << rectangle.getPosition().x << std::endl;
-//    std::cout << "position y : " << rectangle.getPosition().y << std::endl;
+        rectangle.setPosition(i * 80 + 20, number * 80 + Y_OFFSET);
         window.draw(rectangle);
         if (cells[i].sun) {
-            ModelSprite *sprite = new ModelSprite("sun", i * 50 + 20, number * 50 + Y_OFFSET);
-//            sf::CircleShape circle(15.f); // TEMPORARY, need merging !
-//            circle.setOutlineThickness(5.f);
-//            circle.setOutlineColor(sf::Color::Magenta);
-//            circle.setPosition(i * 50 + 20, number * 50 + Y_OFFSET);
-//          std::cout << "position x : " << rectangle.getPosition().x << std::endl;
-//          std::cout << "position y : " << rectangle.getPosition().y << std::endl;
-            sprite->Draw(leftover, window);
+            Lane::sunSprite->Draw(i * 80 + 20, number * 80 + Y_OFFSET, window);
         }
     }
     std::list<Character *>::iterator it;
@@ -115,6 +107,15 @@ bool Lane::IsFull() {
     }
     return full;
 }
+
+unsigned int Lane::GetEntitiesNumber() {
+    return this->gameObjects.size();
+}
+
+unsigned int Lane::GetLaneLumber() {
+    return this->number;
+}
+
 //std::string& Lane::Serialize() {
 //    json j;
 //    std::list<std::string> serials = std::list<std::string>();

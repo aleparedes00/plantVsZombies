@@ -34,6 +34,10 @@ double Character::GetY() const
 {
     return this->Y;
 }
+double Character::GetSpeed() const
+{
+    return this->speed;
+}
 int Character::GetLife() const
 {
     return this->life;
@@ -46,6 +50,10 @@ void Character::SetX(double new_x)
 void Character::SetY(double new_y)
 {
     this->Y = new_y;
+}
+void Character::SetSpeed(double new_speed)
+{
+    this->speed = new_speed;
 }
 void Character::SetLife(int new_life)
 {

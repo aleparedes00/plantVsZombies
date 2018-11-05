@@ -27,8 +27,8 @@ void GameLoop::EventToInput(sf::Event event) {
         }
     } else if (event.type == sf::Event::EventType::MouseButtonPressed) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            std::cout << "Left" << std::endl;
-            this->input = new Input(Types::ButtonPressed, sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+            std::cout << "Left : " << sf::Mouse::getPosition(*window).x << " | " << sf::Mouse::getPosition(*window).y << std::endl;
+            this->input = new Input(Types::ButtonPressed, sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
         } /*else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
             std::cout << "Right" << std::endl;
         } else if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)){
@@ -64,7 +64,7 @@ void GameLoop::run() {
     double deltaTime;
 
     sf::Font font;
-//    sf::Text text;
+    sf::Text *text;
 //    if (!font.loadFromFile("impact.ttf")) {
 //        text.setFont(font);
 //    }

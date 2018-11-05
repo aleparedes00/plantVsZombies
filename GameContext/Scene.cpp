@@ -8,6 +8,7 @@
 #include <iostream>
 #include <random>
 #include <math.h>
+#include <algorithm>
 #include "GameLoop.h"
 #include "../json.hpp"
 #include "../MonsterFactory.h"
@@ -15,12 +16,11 @@
 #include "../Entities/Player.h"
 
 #define TIME_BETWEEN_WAVES 5
-#define TIME_BEFORE_SPAWNRATE_INCREASE 5
 using json = nlohmann::json;
 
 Scene::Scene() {
     this->data = "scene";
-    this->spawnRate = 25;
+    this->nextZombieSpawn = GameLoop::GetStartedTime();
     this->entities = 0;
     this->wave = 1;
     this->remainingZombies = 2;
@@ -51,10 +51,6 @@ Scene::Scene() {
 Scene::~Scene() {}
 
 void Scene::Update(Input &input) {
-//    if ((this->spawnRate + 3) / 5 < (GameLoop::GetStartedTime() / 1000) / TIME_BEFORE_SPAWNRATE_INCREASE){
-//        this->spawnRate += 5;
-//        std::cout << "SpawnRate increasing ! : " << this->spawnRate << std::endl;
-//    }
     this->HandleInput(input);
     this->player->SetInput(input);
     if (this->wave < (GameLoop::GetStartedTime() / 1000.0) / TIME_BETWEEN_WAVES){
@@ -63,11 +59,11 @@ void Scene::Update(Input &input) {
         std::cout << "Starting wave : " << this->wave << " with " << std::pow(2, this->wave) << " max entities" <<std::endl;
     }
     fullLanes = true;
-    for (auto &lane : lanes) {
+    for (auto &lane : lanes) { // Loop used to check if lanes are full or not
         lane.Update();
         fullLanes = lane.IsFull() && fullLanes;
     }
-    if (this->entities <= remainingZombies) {
+    if (remainingZombies > 0) {
         SpawnMonster();
     }
     SpawnSun();
@@ -105,7 +101,8 @@ void Scene::HandleInput(Input &input) {
     if (laneNumber < LANE_NUMBER)
         lanes[laneNumber].HandleInput(input);
     else {
-        std::cout << "Lane number from input : " << laneNumber << std::endl;
+//        std::cout << "Lane number from input : " << laneNumber << std::endl;
+//        std::cout << "Input X : " << input.GetX() << " || Input Y : " << input.GetY() << std::endl;
     }
 }
 
@@ -114,23 +111,31 @@ bool Scene::CheckDefeat() {
 }
 
 void Scene::SpawnMonster() {
-    int random_lane = (int)(rng(gen) * 5); // Generate number between 0 and 4
-    int spawn = 1 + (int)(rng(gen) * 100); // Generate number between 1 and 100
-    std::cout << "Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
-    if (spawn < 1 || spawn > 100)
-        std::cout << "Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
-    if (random_lane < 0 || random_lane > 4)
-        std::cout << "Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
-    if (spawn <= this->spawnRate) {
-        std::cout << "Spawning new zombie in lane " << random_lane << std::endl;
+    //int random_lane = (int)(rng(gen) * 5); // Generate number between 0 and 4 // Generate number between 1 and 100
+    unsigned int lane_choice = 0;
+    unsigned int min_entities = entities;
+//    if (spawn < 1 || spawn > 100)
+//        std::cout << "Wrong values for Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
+//    if (random_lane < 0 || random_lane > 4)
+//        std::cout << "Wrong values for Spawn : "  << spawn << " Lane : " << random_lane << std::endl;
+    if ((GameLoop::GetStartedTime() / 1000.0) >= this->nextZombieSpawn) {
+        std::cout << "Spawning zombie at time : " << GameLoop::GetStartedTime() / 1000.0 << std::endl;
+        for (auto lane : lanes) {
+            if (lane.GetEntitiesNumber() < min_entities){
+                min_entities = lane.GetEntitiesNumber();
+                lane_choice = lane.GetLaneLumber();
+            }
+        }
         ZombieMonster *zombie = new ZombieMonster;
         zombie->AddObserver(this);
-        std::cout << "Just before lane assignation " << random_lane << std::endl;
-        lanes[random_lane].AddEntity(zombie);
+        lanes[lane_choice].AddEntity(zombie);
+        nextZombieSpawn = 0.2 + std::min((rng(gen) * (TIME_BETWEEN_WAVES / remainingZombies)), 0.3) + (GameLoop::GetStartedTime() / 1000.0);
+        std::cout << "Next zombie at time : " << nextZombieSpawn << std::endl;
         this->entities++;
         this->remainingZombies--;
-        std::cout << "Entities : " << this->entities << std::endl;
-        std::cout << "Remaining zombies : " << this->remainingZombies << std::endl;
+        std::cout << "Entities : " << this->entities << " || Remaining zombies : " << this->remainingZombies << std::endl;
+    } else {
+        std::cout << "Not spawning zombie at time : " << GameLoop::GetStartedTime() / 1000.0 << " with " << remainingZombies << " remaining zombies " << std::endl;
     }
 }
 
@@ -144,11 +149,11 @@ void Scene::SpawnSun() {
             random_cell = (int)(rng(gen) * 9); // Generate number between 0 and 8
         }
         if (random_cell < 0 || random_cell > 8)
-            std::cout << "Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
+            std::cout << "Wrong values for Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
         if (random_lane < 0 || random_lane > 4)
-            std::cout << "Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
+            std::cout << "Wrong values for Cell : "  << random_cell << " Lane : " << random_lane << std::endl;
         lanes[random_lane].CreateSun(random_cell);
-        std::cout << "Spawning new sun in lane " << random_lane << " at cell " << random_cell << std::endl;
+        //std::cout << "Spawning new sun in lane " << random_lane << " at cell " << random_cell << std::endl;
     }
 }
 
