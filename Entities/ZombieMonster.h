@@ -5,8 +5,8 @@
 #ifndef PLANTSVSZOMBIES_ZOMBIEMONSTER_H
 #define PLANTSVSZOMBIES_ZOMBIEMONSTER_H
 
-#include <Graphics/ModelSprite.hh>
 #include "Character.h"
+#include "../Graphics/ModelSprite.hh"
 
 class ZombieMonster: public Character
 {

@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
+#include "../Entities/Character.h"
 
 class ModelSprite {
 private:
@@ -21,10 +21,10 @@ private:
     void SetSprite(std::string file);
 
 public:
-    ModelSprite(std::string data, float positionX, float positionY);
+    ModelSprite(std::string , float, float);
     ~ModelSprite();
-    void SetPosition(float X, float Y);
-    void Draw(double, sf::RenderWindow&);
+    void Draw(float, float, sf::RenderWindow&);
+    void Draw(Character*, double, sf::RenderWindow&);
 };
 
 

@@ -17,7 +17,7 @@ ZombieMonster::ZombieMonster()
 {
     this->life = 100;
     this->data = "ZombieMonster";
-    this->X = 500;
+    this->X = 1000;
     this->speed = 1;
     this->sprite = new ModelSprite(data, this->X, this->Y);
 }
@@ -25,7 +25,7 @@ ZombieMonster::ZombieMonster()
 
 ZombieMonster::~ZombieMonster()
 {
-    //delete this->sprite;
+    delete this->sprite;
 }
 
 void ZombieMonster::CheckDeath() {
@@ -52,16 +52,7 @@ void ZombieMonster::Update()
 
 void ZombieMonster::Draw(double leftover, sf::RenderWindow &window)
 {
-    this->sprite->SetPosition((this->X - (speed * leftover)), this->Y); //TODO I need float, this is double, Is that safe?
-//    sf::RectangleShape rectangle(sf::Vector2f(20.f, 20.f)); // TEMPORARY, need merging !
-//    rectangle.setOutlineThickness(5.f);
-//    rectangle.setOutlineColor(sf::Color(255, 0, 0));
-//    rectangle.setPosition((this->X - (speed * leftover)), this->Y);
-//    std::cout << "position x : " << rectangle.getPosition().x << std::endl;
-//    std::cout << "position y : " << rectangle.getPosition().y << std::endl;
-//    window.draw(rectangle);
-    this->sprite->Draw(leftover, window);
-    // this->Model.draw(this, leftover, window); // this -> gives position / leftover -> time before next update / window -> to draw
+    this->sprite->Draw(this, leftover, window);
 }
 
 //std::string& ZombieMonster::Serialize()
