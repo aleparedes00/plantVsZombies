@@ -13,11 +13,10 @@ class Scene;
 
 class Player {
 private:
-    int suns;
+    static int suns;
     Scene *scene;
     bool RemoveSuns(const int);
     void CreateEntity();
-    void AddSuns(const int);
     Input *input;
 public:
     Player(Scene*);
@@ -25,6 +24,7 @@ public:
     void HandleInput(Input *input);
     void Draw(double, sf::RenderWindow&);
     void SetInput(Input&);
+    static void AddSuns();
 };
 
 

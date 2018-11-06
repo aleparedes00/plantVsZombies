@@ -24,10 +24,11 @@ private:
     Lane lanes[LANE_NUMBER];
     std::string data;
     double nextZombieSpawn;
+    double nextSunSpawn;
     unsigned int entities;
     unsigned int remainingZombies;
     double wave;
-    void HandleInput(Input&);
+    void HandleInput(Input);
     void SpawnMonster();
     void SpawnSun();
     Player* player;
@@ -41,7 +42,7 @@ public:
     //Scene(const std::string&);
     ~Scene();
 
-    void Update(Input&);
+    void Update(Input);
 
     void Draw(double, sf::RenderWindow&);
 
@@ -53,7 +54,7 @@ public:
 
     void Notify(Character*);
 
-    const Player* GetPlayer();
+    Player* GetPlayer();
 
     //std::string &Serialize();
 };

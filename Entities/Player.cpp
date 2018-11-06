@@ -6,6 +6,10 @@
 
 #include "Player.h"
 
+#define SUN_ADD 10
+
+int Player::suns = 0;
+
 bool Player::RemoveSuns(const int nb) {
     if (suns - nb < 0)
         return false;
@@ -17,13 +21,13 @@ void Player::CreateEntity() {
 
 }
 
-void Player::AddSuns(const int nb) {
-    suns += nb;
+void Player::AddSuns() {
+    suns += SUN_ADD;
+    std::cout << "Suns : " << suns << std::endl;
 }
 
 Player::Player(Scene *scene) {
     this->scene = scene;
-    this->suns = 0;
     this->input = nullptr;
 }
 

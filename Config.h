@@ -22,12 +22,11 @@
 
 
 
-#define CELL_X_SIZE 50
-#define CELL_Y_SIZE 50
-#define SUN_X_SIZE 20
-#define SUN_Y_SIZE 20
-#define Y_OFFSET 130
-#define X_OFFSET 0
+#define CELL_SIZE 50
+#define CELL_INTERVAL 40
+#define CELL_SPACING (CELL_SIZE + CELL_INTERVAL)
+#define Y_OFFSET 200
+#define X_OFFSET 20
 
 // Graphics files
 #define ZOMBIE_SPRITE "Graphics/Resources/Images/zombie2.png"

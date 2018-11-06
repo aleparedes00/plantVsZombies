@@ -58,6 +58,11 @@ void Character::SetSpeed(double new_speed)
 void Character::SetLife(int new_life)
 {
     this->life = new_life;
+    if (this->life <= 0) {
+        std::cout << "groooarrr je mourru ! " << this->life << std::endl;
+        this->NotifyAll();
+        delete this;
+    }
 }
 
 void Character::AddObserver(IObserver* observer)

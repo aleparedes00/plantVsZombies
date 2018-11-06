@@ -7,7 +7,7 @@
 
 
 #include <list>
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 #include "../Entities/Character.h"
 #include "../IObserver.h"
 #include "Input.h"
@@ -24,6 +24,7 @@ private:
     unsigned int number;
     bool full;
     static ModelSprite* sunSprite;
+    static sf::RectangleShape cellShape;
     std::list<Character*> gameObjects;
     std::string data;
     CELL cells[CELL_NUMBER];
@@ -39,10 +40,12 @@ public:
     void AddEntity(Character*);
     void Update();
     void Draw(double, sf::RenderWindow&);
-    void HandleInput(Input&);
-    void CreateSun(unsigned int);
-    bool HasSun(unsigned int);
-    bool IsFull();
+    void HandleInput(Input);
+    void CreateSun(int);
+    void RemoveSun(int);
+    bool CellHasSun(int);
+    bool CellEmpty(int);
+    bool LaneIsFull();
     unsigned int GetEntitiesNumber();
     unsigned int GetLaneLumber();
 };
