@@ -13,18 +13,18 @@ class Scene;
 
 class Player {
 private:
-    int suns;
-    Scene *scene;
-    bool RemoveSuns(const int);
-    void CreateEntity();
-    void AddSuns(const int);
+    static int suns;
+    static Scene *scene;
+    static bool RemoveSuns(const int);
     Input *input;
 public:
     Player(Scene*);
     ~Player();
+    static Character *GetPlant(int x_pos, int y_pos);
     void HandleInput(Input *input);
     void Draw(double, sf::RenderWindow&);
     void SetInput(Input&);
+    static void AddSuns();
 };
 
 

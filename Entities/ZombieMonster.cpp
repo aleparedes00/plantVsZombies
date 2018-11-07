@@ -28,13 +28,6 @@ ZombieMonster::~ZombieMonster()
     delete this->sprite;
 }
 
-void ZombieMonster::CheckDeath() {
-    if (this->life <= 0) {
-        std::cout << "groooarrr je mourru ! " << this->life << std::endl;
-        this->NotifyAll();
-    }
-}
-
 void ZombieMonster::CheckEndGame() {
     if (this->X <= 0) {
         std::cout << "groooarrr je te mange ! " << this->X << std::endl;
@@ -46,7 +39,6 @@ void ZombieMonster::Update()
 {
     this->X -= this->speed;
     //std::cout << "groooarrr je suis un zombie ! " << this->X << std::endl;
-    this->CheckDeath();
     this->CheckEndGame();
 }
 

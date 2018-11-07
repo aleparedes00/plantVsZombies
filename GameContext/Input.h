@@ -9,10 +9,18 @@
 #include <SFML/Window/Event.hpp>
 enum class Types {
     ButtonDown, // Button is being kept pushed
-    ButtonPressed, // Button just got pushed
+    LeftButtonPressed,// Button just got pushed
+    RightButtonPressed,// Button just got pushed
     ButtonReleased, // Button just stopped being pushed
     ButtonUp // Button has not been touched
 };
+
+template <typename Enumeration>
+auto as_integer(Enumeration const value)
+-> typename std::underlying_type<Enumeration>::type
+{
+    return static_cast<typename std::underlying_type<Enumeration>::type>(value);
+}
 
 class Input {
 private:

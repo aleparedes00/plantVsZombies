@@ -12,6 +12,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../Entities/Character.h"
 
+class Character;
+
 class SpriteFactory {
 private:
     std::string type;

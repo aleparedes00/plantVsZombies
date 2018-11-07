@@ -5,6 +5,12 @@
 #include <iostream>
 
 #include "Player.h"
+#include "EntityFactory.h"
+#define SUN_ADD 10
+#define PLANT_PRICE 20
+
+int Player::suns = 0;
+Scene *Player::scene;
 
 bool Player::RemoveSuns(const int nb) {
     if (suns - nb < 0)
@@ -13,17 +19,24 @@ bool Player::RemoveSuns(const int nb) {
     return true;
 }
 
-void Player::CreateEntity() {
-
+Character *Player::GetPlant(int x_pos, int y_pos) {
+    Character *plant = nullptr;
+    if (RemoveSuns(PLANT_PRICE)) {
+        plant = EntityFactory::Create("Plant");
+        plant->SetX(x_pos);
+        std::cout << "Suns after plant creation : " << suns << std::endl;
+    } else
+        std::cout << "Not enough suns for new plant : " << suns << std::endl;
+    return plant;
 }
 
-void Player::AddSuns(const int nb) {
-    suns += nb;
+void Player::AddSuns() {
+    suns += SUN_ADD;
+    std::cout << "Suns after sun pickup : " << suns << std::endl;
 }
 
 Player::Player(Scene *scene) {
-    this->scene = scene;
-    this->suns = 0;
+    Player::scene = scene;
     this->input = nullptr;
 }
 

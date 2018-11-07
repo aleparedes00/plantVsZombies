@@ -6,13 +6,15 @@
 #define PLANTSVSZOMBIES_LANE_H
 
 
-#include <list>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include "../Entities/Character.h"
 #include "../IObserver.h"
+#include <set>
+#include <SFML/Graphics.hpp>
+#include "../Entities/Character.h"
 #include "Input.h"
 #include "../Config.h"
 #include "Graphics/SpriteFactory.hh"
+
+class SpriteFactory;
 
 struct CELL {
     bool sun = false;
@@ -21,10 +23,11 @@ struct CELL {
 
 class Lane : public IObserver{
 private:
-    unsigned int number;
+    int number;
     bool full;
     static SpriteFactory* sunSprite;
-    std::list<Character*> gameObjects;
+    static sf::RectangleShape cellShape;
+    std::set<Character*> gameObjects;
     std::string data;
     CELL cells[CELL_NUMBER];
     void RemoveEntity(Character*);
@@ -34,17 +37,19 @@ private:
 public:
     Lane();
     ~Lane();
-    void SetNumber(const unsigned int);
-    std::list<Character*> GetEntities() const;
+    void SetNumber(int);
+    std::set<Character*> GetEntities();
     void AddEntity(Character*);
     void Update();
     void Draw(double, sf::RenderWindow&);
-    void HandleInput(Input&);
-    void CreateSun(unsigned int);
-    bool HasSun(unsigned int);
-    bool IsFull();
-    unsigned int GetEntitiesNumber();
-    unsigned int GetLaneLumber();
+    void HandleInput(Input);
+    void CreateSun(int);
+    void RemoveSun(int);
+    bool CellHasSun(int);
+    bool CellEmpty(int);
+    bool LaneIsFull();
+    int GetEntitiesNumber();
+    int GetLaneLumber();
 };
 
 

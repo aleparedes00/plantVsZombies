@@ -11,7 +11,6 @@
 class ZombieMonster: public Character
 {
 private:
-    void CheckDeath();
     void CheckEndGame();
     SpriteFactory *sprite;
 public:

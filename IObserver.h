@@ -5,10 +5,7 @@
 #ifndef PLANTSVSZOMBIES_IOBSERVER_H
 #define PLANTSVSZOMBIES_IOBSERVER_H
 
-
-#include "IObservable.h"
 #include "Entities/AbstractEntity.h"
-#include "Entities/Character.h"
 
 class IObservable;
 class Character;
