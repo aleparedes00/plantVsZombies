@@ -8,6 +8,7 @@
 #include "../GameContext/Scene.h"
 
 #include <iostream>
+#include "PlantProjectile.h"
 
 Plant::Plant()
 {
@@ -15,6 +16,7 @@ Plant::Plant()
     this->data = "Plant";
     this->speed = 0;
     this->sprite = new ModelSprite(data, this->X, this->Y);
+    this->nextAttack = RATE_OF_FIRE + GameLoop::GetStartedTime() / 1000;
 }
 
 
@@ -23,14 +25,25 @@ Plant::~Plant()
     delete this->sprite;
 }
 
-void Plant::Update()
-{
+void Plant::Update() {
+    this->Fire();
+    Character::Update();
+}
+
+void Plant::Fire(){
+    if ((GameLoop::GetStartedTime() / 1000.0) >= this->nextAttack) {
+        Character *projectile = new PlantProjectile();
+        projectile->SetX(this->X);
+        projectile->SetY(this->Y);
+        lane->AddEntity(projectile);
+        this->nextAttack = (GameLoop::GetStartedTime() / 1000) + RATE_OF_FIRE;
+    }
 }
 
 void Plant::Draw(double leftover, sf::RenderWindow &window)
 {
-    sf::CircleShape circle = sf::CircleShape(CELL_SIZE / 2);
-    circle.setFillColor(sf::Color::Green);
+    sf::CircleShape circle = sf::CircleShape(CELL_SIZE / 2); // PLACEHOLDER
+    circle.setFillColor(sf::Color::Red);
     circle.setPosition(this->X, this->Y);
     window.draw(circle);
     //this->sprite->Draw(this, leftover, window);

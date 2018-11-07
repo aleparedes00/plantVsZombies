@@ -6,13 +6,15 @@
 #define PLANTSVSZOMBIES_LANE_H
 
 
-#include <list>
+#include "../IObserver.h"
+#include <set>
 #include <SFML/Graphics.hpp>
 #include "../Entities/Character.h"
-#include "../IObserver.h"
 #include "Input.h"
 #include "../Config.h"
 #include "../Graphics/ModelSprite.hh"
+
+class ModelSprite;
 
 struct CELL {
     bool sun = false;
@@ -21,11 +23,11 @@ struct CELL {
 
 class Lane : public IObserver{
 private:
-    unsigned int number;
+    int number;
     bool full;
     static ModelSprite* sunSprite;
     static sf::RectangleShape cellShape;
-    std::list<Character*> gameObjects;
+    std::set<Character*> gameObjects;
     std::string data;
     CELL cells[CELL_NUMBER];
     void RemoveEntity(Character*);
@@ -35,8 +37,8 @@ private:
 public:
     Lane();
     ~Lane();
-    void SetNumber(const unsigned int);
-    std::list<Character*> GetEntities() const;
+    void SetNumber(int);
+    std::set<Character*> GetEntities();
     void AddEntity(Character*);
     void Update();
     void Draw(double, sf::RenderWindow&);
@@ -46,8 +48,8 @@ public:
     bool CellHasSun(int);
     bool CellEmpty(int);
     bool LaneIsFull();
-    unsigned int GetEntitiesNumber();
-    unsigned int GetLaneLumber();
+    int GetEntitiesNumber();
+    int GetLaneLumber();
 };
 
 

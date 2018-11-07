@@ -7,7 +7,6 @@
 #include <iostream>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
-#include "../Graphics/ModelSprite.hh"
 #include "../json.hpp"
 #include "../Entities/Character.h"
 #include "../Entities/Player.h"
@@ -18,7 +17,7 @@ ModelSprite *Lane::sunSprite = new ModelSprite("sun", 0, 0);
 sf::RectangleShape Lane::cellShape = sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 
 Lane::Lane() {
-    this->gameObjects = std::list<Character *>();
+    this->gameObjects = std::set<Character *>();
     this->data = "Lane";
     cellShape.setOutlineThickness(8.f);
     cellShape.setOutlineColor(sf::Color::Green);
@@ -26,12 +25,12 @@ Lane::Lane() {
 
 Lane::~Lane() {}
 
-void Lane::SetNumber(const unsigned int number) {
+void Lane::SetNumber(int number) {
     std::cout << "Received number for lane : " << number << std::endl;
     this->number = number;
 }
 
-std::list<Character *> Lane::GetEntities() const {
+std::set<Character *> Lane::GetEntities() {
     return this->gameObjects;
 }
 
@@ -50,18 +49,22 @@ void Lane::Notify(Character *character) {
 
 void Lane::AddEntity(Character *entity) {
     entity->AddObserver(this);
+    entity->SetLane(this);
     entity->SetY(number * CELL_SPACING + Y_OFFSET);
-    this->gameObjects.push_back(entity);
+    this->gameObjects.insert(entity);
 }
 
 void Lane::RemoveEntity(Character *entity) {
-    this->gameObjects.remove(entity);
+    if (gameObjects.find(entity) != gameObjects.end()) {
+        this->gameObjects.erase(entity);
+    } else {
+        std::cout << "--- DEBUG : Entity not found in set !" << std::endl;
+    }
 }
 
 void Lane::Update() {
-    std::list<Character *>::iterator it;
-    for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
-        (*it)->Update();
+    for (auto entity : gameObjects) {
+        entity->Update();
     }
 }
 
@@ -74,8 +77,8 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
         }
     }
     std::list<Character *>::iterator it;
-    for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++) {
-        (*it)->Draw(leftover, window);
+    for (auto entity : gameObjects) {
+        entity->Draw(leftover, window);
     }
     //std::cout << "Drawing lane : " << number << std::endl;
 }
@@ -83,15 +86,21 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
 
 void Lane::HandleInput(Input input) {
     double point = std::max((double)((input.GetX() - X_OFFSET) % CELL_SPACING), 0.0);
-    if (point <= CELL_SIZE && input.GetX() > X_OFFSET && input.GetType() == Types::LeftButtonPressed) {
+    if (point <= CELL_SIZE && input.GetX() > X_OFFSET) {
         int cellNumber = (double)((input.GetX() - X_OFFSET) / CELL_SPACING);
-        if (cellNumber <= CELL_NUMBER){
-            if (CellHasSun(cellNumber)) {
+        if (cellNumber < CELL_NUMBER){
+            if (CellHasSun(cellNumber) && input.GetType() == Types::LeftButtonPressed) {
                 RemoveSun(cellNumber);
                 Player::AddSuns();
                 std::cout << "Praise the Sun, Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
-            } else {
-                std::cout << "Failed to praise the Sun, Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
+            } else if (CellEmpty(cellNumber) && input.GetType() == Types::RightButtonPressed){
+                Character *plant = Player::GetPlant(cellNumber * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET);
+                if (plant != nullptr) {
+                    cells[cellNumber].empty = false;
+                    this->AddEntity(plant);
+                    plant->SetLane(this);
+                    std::cout << "Creating plant ! Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
+                }
             }
         }
     }
@@ -108,6 +117,8 @@ void Lane::RemoveSun(int position) {
 }
 
 bool Lane::CellHasSun(int position) {
+    if (position < 0 || position >= CELL_NUMBER)
+        std::cout << "--- DEBUG SEGFAULT : POSITION = " << position << std::endl;
     return cells[position].sun;
 }
 
@@ -125,11 +136,11 @@ bool Lane::LaneIsFull() {
     return full;
 }
 
-unsigned int Lane::GetEntitiesNumber() {
+int Lane::GetEntitiesNumber() {
     return this->gameObjects.size();
 }
 
-unsigned int Lane::GetLaneLumber() {
+int Lane::GetLaneLumber() {
     return this->number;
 }
 
@@ -139,7 +150,7 @@ unsigned int Lane::GetLaneLumber() {
 //    std::list<Character*>::iterator it;
 //    for (it = this->gameObjects.begin(); it != this->gameObjects.end(); it++)
 //        serials.push_back((*it)->Serialize());
-//    j["entities"] = serials;
+//    j["zombies"] = serials;
 //    data = j.dump();
 //    return this->data;
 //}

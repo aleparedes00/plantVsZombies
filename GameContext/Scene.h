@@ -8,24 +8,23 @@
 #include <list>
 #include <random>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../Entities/AbstractEntity.h"
-#include "TimeManager.h"
+#include "../IObserver.h"
 #include "../ISerializable.h"
-#include "Lane.h"
 #include "Input.h"
 #include "../Entities/Player.h"
 #include "../Config.h"
 
-
 class Player;
+class Lane;
+class AbstractEntity;
 
-class Scene : public IObserver/*: public ISerializable*/ {
+class Scene : public IObserver {
 private:
-    Lane lanes[LANE_NUMBER];
+    Lane* lanes[LANE_NUMBER];
     std::string data;
     double nextZombieSpawn;
     double nextSunSpawn;
-    unsigned int entities;
+    unsigned int zombies;
     unsigned int remainingZombies;
     double wave;
     void HandleInput(Input);
@@ -55,6 +54,8 @@ public:
     void Notify(Character*);
 
     Player* GetPlayer();
+
+    void AddEntity(Character*);
 
     //std::string &Serialize();
 };

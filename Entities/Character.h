@@ -7,9 +7,11 @@
 
 #include <string>
 
-#include "AbstractEntity.h"
 #include "../IObservable.h"
-#include "../IObserver.h"
+#include "AbstractEntity.h"
+#include "../GameContext/Lane.h"
+
+class Lane;
 
 class Character: public AbstractEntity, IObservable
 {
@@ -18,10 +20,12 @@ protected:
     std::string data;
     double X, Y, speed;
     int life;
+    Lane *lane;
     virtual void NotifyAll();
 public:
     Character();
     virtual ~Character() = 0;
+    virtual std::string GetData() const;
     virtual double GetX() const;
     virtual double GetY() const;
     virtual double GetSpeed() const;
@@ -30,6 +34,7 @@ public:
     virtual void SetY(double);
     virtual void SetSpeed(double);
     virtual void SetLife(int);
+    virtual void SetLane(Lane*);
     virtual void AddObserver(IObserver*);
     virtual void RemoveObserver(IObserver*);
     virtual std::string& Serialize();

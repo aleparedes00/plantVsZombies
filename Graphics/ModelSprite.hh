@@ -12,12 +12,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../Entities/Character.h"
 
+class Character;
+
 class ModelSprite {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
-
-
 public:
     ModelSprite(std::string , float, float);
     ~ModelSprite();

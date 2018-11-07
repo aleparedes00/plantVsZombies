@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "../IObserver.h"
 #include <iostream>
+
 using namespace std;
 
 Character::Character()
@@ -25,7 +26,10 @@ void Character::NotifyAll()
         (*it)->Notify(this);
     std::cout << "After Character notify all" << std::endl;
 }
-
+std::string Character::GetData() const
+{
+    return this->data;
+}
 double Character::GetX() const
 {
     return this->X;
@@ -55,6 +59,11 @@ void Character::SetSpeed(double new_speed)
 {
     this->speed = new_speed;
 }
+
+void Character::SetLane(Lane *lane) {
+    this->lane = lane;
+}
+
 void Character::SetLife(int new_life)
 {
     this->life = new_life;
