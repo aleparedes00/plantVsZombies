@@ -6,13 +6,13 @@
 #include <iterator>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "../Graphics/ModelSprite.hh"
+#include "Graphics/SpriteFactory.hh"
 #include "../json.hpp"
 #include "../Entities/Character.h"
 
 using json = nlohmann::json;
 
-ModelSprite *Lane::sunSprite = new ModelSprite("sun", 0, 0);
+SpriteFactory *Lane::sunSprite = new SpriteFactory("sun", 0, 0);
 
 Lane::Lane() {
     this->gameObjects = std::list<Character *>();

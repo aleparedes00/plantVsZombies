@@ -19,7 +19,7 @@ ZombieMonster::ZombieMonster()
     this->data = "ZombieMonster";
     this->X = 1000;
     this->speed = 1;
-    this->sprite = new ModelSprite(data, this->X, this->Y);
+    this->sprite = new SpriteFactory(data, this->X, this->Y);
 }
 
 

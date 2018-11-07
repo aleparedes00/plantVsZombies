@@ -12,7 +12,7 @@
 #include "../IObserver.h"
 #include "Input.h"
 #include "../Config.h"
-#include "../Graphics/ModelSprite.hh"
+#include "Graphics/SpriteFactory.hh"
 
 struct CELL {
     bool sun = false;
@@ -23,7 +23,7 @@ class Lane : public IObserver{
 private:
     unsigned int number;
     bool full;
-    static ModelSprite* sunSprite;
+    static SpriteFactory* sunSprite;
     std::list<Character*> gameObjects;
     std::string data;
     CELL cells[CELL_NUMBER];

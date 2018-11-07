@@ -12,17 +12,18 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../Entities/Character.h"
 
-class ModelSprite {
+class SpriteFactory {
 private:
     std::string type;
     sf::Texture texture;
     sf::Sprite sprite;
 
     void SetSprite(std::string file);
+    float CastToFloat(double x);
 
 public:
-    ModelSprite(std::string , float, float);
-    ~ModelSprite();
+    SpriteFactory(std::string , float, float);
+    ~SpriteFactory();
     void Draw(float, float, sf::RenderWindow&);
     void Draw(Character*, double, sf::RenderWindow&);
 };
