@@ -54,9 +54,6 @@ sf::Sprite *SpriteFactory::SetZombieSprite(sf::Sprite *sprite) {
 }
 
 sf::Sprite *SpriteFactory::SetSunSprite(sf::Sprite *sprite){
-    //auto size = this->sprite.getTexture()->getSize();
-    //auto scale_x = size.x/LANE_WIDTH;
-    //auto scale_y = size.y/LANE_WIDTH;
     sprite->setScale(0.07, 0.07);
     //std::cout << ">>>> Returning a sun sprite " << std::endl;
     return sprite;

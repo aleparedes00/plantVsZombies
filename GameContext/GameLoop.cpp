@@ -14,13 +14,15 @@ GameLoop::GameLoop(sf::RenderWindow &window) {
     this->running = true;
     this->window = &window;
     this->input = new Input(Types::ButtonUp, sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-//    this->text = sf::Text();
-//    if (font.loadFromFile("Graphics/Resources/Fonts/Arial.ttf")) {
-//        std::cout << "Found font" << std::endl;
-//    } else {
-//        std::cout << "Problem setting font" << std::endl;
-//    }
-//    this->text.setString("Start");
+
+    this->text = new sf::Text();
+    if (font.loadFromFile("../Graphics/Resources/Fonts/Arial.ttf")) {
+        std::cout << "Found font" << std::endl;
+    } else {
+        std::cout << "Problem setting font" << std::endl;
+    }
+    this->text->setFont(font);
+    this->text->setString("Start");
     std::cout << "End of the gameloop initialization" << std::endl;
 }
 
@@ -61,7 +63,7 @@ void GameLoop::run() {
 //    text.setFillColor(sf::Color::Yellow);
 //    text.setCharacterSize(24);
 //    text.setStyle(sf::Text::Bold);
-//    text.setPosition(850, 20);
+    text->setPosition(850, 20);
 
     std::cout << "Starting manager" << std::endl;
     manager->Start();
@@ -102,7 +104,7 @@ void GameLoop::run() {
 //            text.setString(toast);
 //        }
 //        std::cout << "Before text !" << std::endl;
-//        window->draw(text);
+        window->draw(*text);
 //        std::cout << "After text !" << std::endl;
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
         //std::cout << "End of Draw loop" << std::endl;
