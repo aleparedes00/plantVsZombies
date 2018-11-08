@@ -11,23 +11,17 @@
 #include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../Entities/Character.h"
+#include "ImageModel.h"
 
 class Character;
 
 class SpriteFactory {
 private:
-    std::string type;
-    sf::Texture texture;
-    sf::Sprite sprite;
-
-    void SetSprite(std::string file);
-    float CastToFloat(double x);
-
+    static sf::Sprite *SetZombieSprite(sf::Sprite*);
+    static sf::Sprite *SetSunSprite(sf::Sprite*);
+    static float CastDoubleToFloat(double x);
 public:
-    SpriteFactory(std::string , float, float);
-    ~SpriteFactory();
-    void Draw(float, float, sf::RenderWindow&);
-    void Draw(Character*, double, sf::RenderWindow&);
+    static ImageModel *CreateImage(std::string, float, float);
 };
 
 

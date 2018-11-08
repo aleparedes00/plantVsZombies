@@ -10,8 +10,11 @@
 #include "../IObservable.h"
 #include "AbstractEntity.h"
 #include "../GameContext/Lane.h"
+#include <SFML/Graphics.hpp>
+#include "../Graphics/ImageModel.h"
 
 class Lane;
+class ImageModel;
 
 class Character: public AbstractEntity, IObservable
 {
@@ -21,17 +24,20 @@ protected:
     double X, Y, speed;
     int life;
     Lane *lane;
+    ImageModel *image;
     virtual void NotifyAll();
 public:
     Character();
     virtual ~Character() = 0;
     virtual std::string GetData() const;
+    virtual void Draw(double, sf::RenderWindow&);
     virtual double GetX() const;
     virtual double GetY() const;
     virtual double GetSpeed() const;
     virtual int GetLife() const;
     virtual void SetX(double);
     virtual void SetY(double);
+    virtual void SetImage(ImageModel*);
     virtual void SetSpeed(double);
     virtual void SetLife(int);
     virtual void SetLane(Lane*);

@@ -12,6 +12,13 @@ TimeManager *GameLoop::manager = &TimeManager::GetInstance();
 GameLoop::GameLoop(sf::RenderWindow &window) {
     this->running = true;
     this->window = &window;
+    this->text = new sf::Text;
+    if (font.loadFromFile("Graphics/Resources/Fonts/Arial.ttf")) {
+        std::cout << "Found font" << std::endl;
+    } else {
+        std::cout << "Problem setting font" << std::endl;
+    }
+    this->text->setString("Start");
 }
 
 GameLoop::~GameLoop() {}
@@ -47,16 +54,11 @@ void GameLoop::run() {
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
 
-    sf::Font font;
-    sf::Text *text;
-//    if (!font.loadFromFile("impact.ttf")) {
-//        text.setFont(font);
-//    }
-//    text.setString("Hello world");
-//    text.setFillColor(sf::Color::Red);
-//    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-//    text.setCharacterSize(24);
-//    text.setPosition(400, 20);
+    text->setFont(this->font);
+    text->setFillColor(sf::Color::Yellow);
+    text->setCharacterSize(24);
+    text->setStyle(sf::Text::Bold);
+    text->setPosition(850, 20);
 
     std::cout << "Starting manager" << std::endl;
     manager->Start();
@@ -89,12 +91,14 @@ void GameLoop::run() {
         window->clear();
 
 
-//        if (deltaTime > 0) {
-//            double fps = 1000.0 / deltaTime;
-//            std::string toast = "FPS : " + std::to_string(fps);
-//            text.setString("Hello");
-//            window->draw(text);
-//        }
+        if (manager->GetStartedTime() > 0) {
+            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
+            std::string toast = "FPS : " + std::to_string(fps);
+            text->setString(toast);
+        }
+        std::cout << "Before text !" << std::endl;
+        window->draw(*(text));
+        std::cout << "After text !" << std::endl;
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
         window->display();
         running = running && !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop

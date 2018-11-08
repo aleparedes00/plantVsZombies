@@ -11,10 +11,11 @@
 #include "../json.hpp"
 #include "../Entities/Character.h"
 #include "../Entities/Player.h"
+#include "Graphics/SpriteFactory.hh"
 
 using json = nlohmann::json;
 
-SpriteFactory *Lane::sunSprite = new SpriteFactory("sun", 0, 0);
+ImageModel *Lane::sunSprite = SpriteFactory::CreateImage("sun", 0, 0);
 sf::RectangleShape Lane::cellShape = sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 
 Lane::Lane() {

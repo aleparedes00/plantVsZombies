@@ -15,7 +15,7 @@ Plant::Plant()
     this->life = 100;
     this->data = "Plant";
     this->speed = 0;
-    this->sprite = new SpriteFactory(data, this->X, this->Y);
+    this->image = SpriteFactory::CreateImage(data, this->X, this->Y);
     this->nextAttack = RATE_OF_FIRE + GameLoop::GetStartedTime() / 1000;
 }
 

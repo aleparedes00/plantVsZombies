@@ -19,6 +19,12 @@ Character::~Character()
 {
 }
 
+void Character::Draw(double leftover, sf::RenderWindow &window)
+{
+    if (this->image != nullptr)
+        this->image->Draw(this, leftover, window);
+}
+
 void Character::NotifyAll()
 {
     list<IObserver*>::iterator it;
@@ -54,6 +60,10 @@ void Character::SetX(double new_x)
 void Character::SetY(double new_y)
 {
     this->Y = new_y;
+}
+void Character::SetImage(ImageModel *image)
+{
+    this->image = image;
 }
 void Character::SetSpeed(double new_speed)
 {

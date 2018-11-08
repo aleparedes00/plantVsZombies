@@ -19,7 +19,7 @@ ZombieMonster::ZombieMonster()
     this->data = "ZombieMonster";
     this->X = 1000;
     this->speed = 1;
-    this->sprite = new SpriteFactory(data, this->X, this->Y);
+    this->image = SpriteFactory::CreateImage(data, this->X, this->Y);
 }
 
 
@@ -40,11 +40,6 @@ void ZombieMonster::Update()
     this->X -= this->speed;
     //std::cout << "groooarrr je suis un zombie ! " << this->X << std::endl;
     this->CheckEndGame();
-}
-
-void ZombieMonster::Draw(double leftover, sf::RenderWindow &window)
-{
-    this->sprite->Draw(this, leftover, window);
 }
 
 //std::string& ZombieMonster::Serialize()

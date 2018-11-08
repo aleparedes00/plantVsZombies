@@ -17,7 +17,6 @@ public:
     ZombieMonster();
     ~ZombieMonster();
     void Update();
-    void Draw(double, sf::RenderWindow&);
     //std::string& Serialize();
 };
 

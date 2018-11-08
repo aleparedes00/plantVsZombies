@@ -45,7 +45,8 @@ add_executable(plantVsZombies
         MonsterFactory.h
         Graphics/SpriteFactory.cpp
         Graphics/SpriteFactory.hh
-        )
+        Graphics/ImageModel.cpp
+        Graphics/ImageModel.h)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 find_package(SFML REQUIRED system window graphics network audio)
