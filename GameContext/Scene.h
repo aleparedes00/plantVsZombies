@@ -35,6 +35,8 @@ private:
     bool fullLanes;
     std::mt19937 gen; // Generator made from seed
     std::uniform_real_distribution<double> rng; // Generate random numbers from generator
+
+
 public:
     Scene();
 

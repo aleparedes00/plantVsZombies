@@ -31,20 +31,48 @@ Character *Player::GetPlant(int x_pos, int y_pos) {
 }
 
 void Player::AddSuns() {
+
     suns += SUN_ADD;
     std::cout << "Suns after sun pickup : " << suns << std::endl;
+
 }
 
 Player::Player(Scene *scene) {
     Player::scene = scene;
     this->input = nullptr;
+    this->SetPrintableSun();
 }
 
 Player::~Player() {
 
 }
 
+void Player::SetPrintableSun(){
+    this->text = new sf::Text();
+    this->font = new sf::Font();
+    if (font->loadFromFile(FONT_FILE)){
+        std::cout << "Found font" << std::endl;
+    } else {
+        std::cout << "Problem setting font" << std::endl;
+    }
+    this->text->setFont(*font);
+    this->text->setString("Suns");
+    text->setStyle(sf::Text::Bold);
+
+    text->setPosition(20, 20);
+}
+
+void Player::ColorPrintableSun() {
+    if(this->suns >= 30){
+        this->text->setFillColor(sf::Color::Yellow);
+    } else{
+        this->text->setFillColor(sf::Color::Red);
+    }
+}
 void Player::Draw(double leftover, sf::RenderWindow &window){
+    text->setString(std::to_string(suns));
+    ColorPrintableSun();
+    window.draw(*text);
 //    if (this->input != nullptr){
 //        std::cout << "Drawing for player" << std::endl;
 //        sf::Font font = sf::Font();

@@ -26,5 +26,6 @@
 // Graphics files
 #define ZOMBIE_SPRITE "../Graphics/Resources/Images/zombie2.png"
 #define SUN_SPRITE "../Graphics/Resources/Images/sun.png"
+#define FONT_FILE "../Graphics/Resources/Fonts/Arial.ttf"
 
 #endif //PLANTSVSZOMBIES_CONFIG_H

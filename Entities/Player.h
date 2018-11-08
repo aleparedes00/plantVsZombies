@@ -17,6 +17,10 @@ private:
     static Scene *scene;
     static bool RemoveSuns(const int);
     Input *input;
+
+    sf::Text* text;
+    sf::Font* font;
+    void SetPrintableSun();
 public:
     Player(Scene*);
     ~Player();
@@ -25,6 +29,7 @@ public:
     void Draw(double, sf::RenderWindow&);
     void SetInput(Input&);
     static void AddSuns();
+    void ColorPrintableSun();
 };
 
 

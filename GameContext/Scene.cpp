@@ -35,6 +35,7 @@ Scene::Scene() {
         lanes[i] = new Lane;
         lanes[i]->SetNumber(i);
     }
+
 }
 
 //Scene::Scene(const std::string& serials) {

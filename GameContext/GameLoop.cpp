@@ -17,13 +17,15 @@ GameLoop::GameLoop(sf::RenderWindow &window) {
 
     this->text = new sf::Text();
     this->font = new sf::Font();
-    if (font->loadFromFile("../Graphics/Resources/Fonts/Arial.ttf")) {
+    if (font->loadFromFile(FONT_FILE)) {
         std::cout << "Found font" << std::endl;
     } else {
         std::cout << "Problem setting font" << std::endl;
     }
     this->text->setFont(*font);
     this->text->setString("Start");
+    text->setStyle(sf::Text::Bold);
+    text->setPosition(850, 20);
     std::cout << "End of the gameloop initialization" << std::endl;
 }
 
@@ -60,10 +62,8 @@ void GameLoop::run() {
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
 
-    text->setStyle(sf::Text::Bold);
-    text->setPosition(850, 20);
 
-
+    std::cout << "Starting manager" << std::endl;
     manager->Start();
     while (running) {
         manager->Update();
@@ -101,9 +101,6 @@ void GameLoop::run() {
             text->setString(toast);
         }
 //        std::cout << "Before text !" << std::endl;
-        std::string textString = text->getString();
-        std::cout << "text -> string   " << textString << std::endl;
-        std::cout << "Starting manager" << std::endl;
         window->draw(*text);
 //        std::cout << "After text !" << std::endl;
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
