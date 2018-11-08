@@ -6,8 +6,10 @@
 
 int main()
 {
+    std::cout << "Start of the game" << std::endl;
     sf::RenderWindow window(sf::VideoMode(X_RESOLUTION, Y_RESOLUTION), "Starting the game !");
     GameLoop gameLoop = GameLoop(window);
+    std::cout << "Start of the gameloop" << std::endl;
     gameLoop.run();
     std::cout << "Exited gameloop" << std::endl;
     if (window.isOpen())

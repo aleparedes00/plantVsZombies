@@ -17,6 +17,8 @@ class Character;
 
 class SpriteFactory {
 private:
+    static sf::Texture zombieTexture;
+    static sf::Texture sunTexture;
     static sf::Sprite *SetZombieSprite(sf::Sprite*);
     static sf::Sprite *SetSunSprite(sf::Sprite*);
     static float CastDoubleToFloat(double x);

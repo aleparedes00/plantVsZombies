@@ -7,8 +7,12 @@
 #include "../Config.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
-ImageModel::ImageModel(sf::Sprite *sprite) {
+ImageModel::ImageModel(sf::Sprite *sprite, sf::Texture *texture) {
     this->sprite = sprite;
+    this->texture = texture;
+    this->sprite->setTexture(*texture);
+    //this->sprite->setOrigin(sf::Vector2f(texture->getSize().x * 0.2, texture->getSize().y * 0.2));
+    std::cout << ">>>> Texture set on sprite " << std::endl;
 }
 
 ImageModel::~ImageModel() {}

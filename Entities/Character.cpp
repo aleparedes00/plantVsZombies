@@ -23,6 +23,9 @@ void Character::Draw(double leftover, sf::RenderWindow &window)
 {
     if (this->image != nullptr)
         this->image->Draw(this, leftover, window);
+    else {
+        std::cout << "Empty image for character of type " << this->data << std::endl;
+    }
 }
 
 void Character::NotifyAll()

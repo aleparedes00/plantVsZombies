@@ -10,15 +10,17 @@
 TimeManager *GameLoop::manager = &TimeManager::GetInstance();
 
 GameLoop::GameLoop(sf::RenderWindow &window) {
+    std::cout << "Start of the gameloop initialization" << std::endl;
     this->running = true;
     this->window = &window;
-    this->text = new sf::Text;
-    if (font.loadFromFile("Graphics/Resources/Fonts/Arial.ttf")) {
-        std::cout << "Found font" << std::endl;
-    } else {
-        std::cout << "Problem setting font" << std::endl;
-    }
-    this->text->setString("Start");
+//    this->text = sf::Text();
+//    if (font.loadFromFile("Graphics/Resources/Fonts/Arial.ttf")) {
+//        std::cout << "Found font" << std::endl;
+//    } else {
+//        std::cout << "Problem setting font" << std::endl;
+//    }
+//    this->text.setString("Start");
+    std::cout << "End of the gameloop initialization" << std::endl;
 }
 
 GameLoop::~GameLoop() {}
@@ -54,11 +56,11 @@ void GameLoop::run() {
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
 
-    text->setFont(this->font);
-    text->setFillColor(sf::Color::Yellow);
-    text->setCharacterSize(24);
-    text->setStyle(sf::Text::Bold);
-    text->setPosition(850, 20);
+//    text.setFont(this->font);
+//    text.setFillColor(sf::Color::Yellow);
+//    text.setCharacterSize(24);
+//    text.setStyle(sf::Text::Bold);
+//    text.setPosition(850, 20);
 
     std::cout << "Starting manager" << std::endl;
     manager->Start();
@@ -77,12 +79,14 @@ void GameLoop::run() {
                 window->close();
             }
         }
+        //std::cout << "End of pollEvent" << std::endl;
 
-        while (lag >= step) { // GAMEPLAY LOOP. Physics happen here at fixed time steps. This means no one calls GetElapsedTime from the Time Manager.
+        while (lag >= step) { // UPDATE LOOP. Physics happen here at fixed time steps. This means no one calls GetElapsedTime from the Time Manager.
             scene->Update(*(input));
             lag -= step;
             loops++;
         }
+        //std::cout << "End of Update loop" << std::endl;
         leftover = lag / step; // Time left between two frames
         //std::cout << "Graphic leftover : " << leftover << std::endl;
 
@@ -91,16 +95,18 @@ void GameLoop::run() {
         window->clear();
 
 
-        if (manager->GetStartedTime() > 0) {
-            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
-            std::string toast = "FPS : " + std::to_string(fps);
-            text->setString(toast);
-        }
-        std::cout << "Before text !" << std::endl;
-        window->draw(*(text));
-        std::cout << "After text !" << std::endl;
+//        if (manager->GetStartedTime() > 0) {
+//            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
+//            std::string toast = "FPS : " + std::to_string(fps);
+//            text.setString(toast);
+//        }
+//        std::cout << "Before text !" << std::endl;
+//        window->draw(text);
+//        std::cout << "After text !" << std::endl;
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
+        //std::cout << "End of Draw loop" << std::endl;
         window->display();
+        //std::cout << "Displaying" << std::endl;
         running = running && !scene->CheckDefeat(); // Checking defeat last to avoid doing another loop
 
 //        std::cout << "Seconds since start : " << manager->GetStartedTime() / 1000.0 << std::endl;
@@ -114,7 +120,6 @@ void GameLoop::run() {
     std::cout << "Seconds since Start : " << manager->GetStartedTime() / 1000 << std::endl;
     std::cout << "Steps per second since start : " << loops / (manager->GetStartedTime() / 1000) << std::endl;
     std::cout << "Frames per second since start : " << totalLooops / (manager->GetStartedTime() / 1000) << std::endl;
-    std::cout << "Debug" << std::endl;
     //TODO Cleanup logic ?
 }
 

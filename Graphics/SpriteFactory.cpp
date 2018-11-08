@@ -7,16 +7,27 @@
 #include "../Config.h"
 #include "SpriteFactory.hh"
 
-using json = nlohmann::json;
-
 ImageModel *SpriteFactory::CreateImage(std::string data, float positionX, float positionY) {
+    sf::Texture *texture = new sf::Texture();
     sf::Sprite *sprite = new sf::Sprite();
     sprite->setPosition(positionX , positionY);
     if(data == "ZombieMonster") {
         sprite = SetZombieSprite(sprite);
+        if (!texture->loadFromFile(ZOMBIE_SPRITE)){
+            std::cout << "The zombie image didn't load" << std::endl;
+            return nullptr;
+        } else {
+            std::cout << "Zombie image found" << std::endl;
+        }
     }
     else if (data == "sun") {
         sprite = SetSunSprite(sprite);
+        if (!texture->loadFromFile(SUN_SPRITE)){
+            std::cout << "The sun image didn't load" << std::endl;
+            return nullptr;
+        } else {
+            std::cout << "Sun image found" << std::endl;
+        }
         //auto size = this->sprite.getTexture()->getSize();
         //auto scale_x = size.x/LANE_WIDTH;
         //auto scale_y = size.y/LANE_WIDTH;
@@ -25,8 +36,10 @@ ImageModel *SpriteFactory::CreateImage(std::string data, float positionX, float 
     } else {
         return nullptr;
     }
-    if (sprite != nullptr)
-        return new ImageModel(sprite);
+    if (sprite != nullptr) {
+        std::cout << ">>>> Returning a new image " << std::endl;
+        return new ImageModel(sprite, texture);
+    }
     return nullptr;
 }
 // this->CastDoubleToFloat(sprite.getTexture()->getSize().x);
@@ -35,31 +48,17 @@ float SpriteFactory::CastDoubleToFloat(double x){
 }
 
 sf::Sprite *SpriteFactory::SetZombieSprite(sf::Sprite *sprite) {
-    sf::Texture *texture = new sf::Texture();
-    if (!texture->loadFromFile(ZOMBIE_SPRITE)){
-        throw new std::runtime_error("The image didn't load");
-        return nullptr;
-    }
-    sprite->setTexture(*texture);
-    float float_x = CastDoubleToFloat(sprite->getTexture()->getSize().x);
-    float float_y = CastDoubleToFloat(sprite->getTexture()->getSize().y);
-    sprite->setOrigin(sf::Vector2f(CastDoubleToFloat(float_x * 0.2), CastDoubleToFloat(float_y * 0.2)));
     sprite->setScale(0.104, 0.104);
+    std::cout << ">>>> Returning a zombie sprite " << std::endl;
     return sprite;
 }
 
 sf::Sprite *SpriteFactory::SetSunSprite(sf::Sprite *sprite){
-    sf::Texture *texture = new sf::Texture();
-    if (!texture->loadFromFile(SUN_SPRITE)){
-        std::cout << "The image didn't load" << std::endl;
-    }
-    std::cout << ">>>> Creating a sun sprite " << std::endl;
     //auto size = this->sprite.getTexture()->getSize();
     //auto scale_x = size.x/LANE_WIDTH;
     //auto scale_y = size.y/LANE_WIDTH;
-    sprite->setTexture(*texture, true);
-    //sprite.setOrigin(sf::Vector2f(sprite.getTexture()->getSize().x * 0.2, sprite.getTexture()->getSize().y * 0.2));
     sprite->setScale(0.07, 0.07);
+    std::cout << ">>>> Returning a sun sprite " << std::endl;
     return sprite;
 }
 

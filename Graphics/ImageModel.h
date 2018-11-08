@@ -13,14 +13,18 @@
 #include "../Entities/Character.h"
 
 class ImageModel {
-    private:
-        sf::Sprite *sprite;
+private:
+    sf::Texture *texture;
+    sf::Sprite *sprite;
 
-    public:
-        ImageModel(sf::Sprite*);
-        ~ImageModel();
-        void Draw(float, float, sf::RenderWindow&);
-        void Draw(Character*, double, sf::RenderWindow&);
+public:
+    ImageModel(sf::Sprite*, sf::Texture*);
+
+    ~ImageModel();
+
+    void Draw(float, float, sf::RenderWindow &);
+
+    void Draw(Character *, double, sf::RenderWindow &);
 };
 
 

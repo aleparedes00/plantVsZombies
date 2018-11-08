@@ -19,17 +19,19 @@ ImageModel *Lane::sunSprite = SpriteFactory::CreateImage("sun", 0, 0);
 sf::RectangleShape Lane::cellShape = sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 
 Lane::Lane() {
+    std::cout << "Start of lane initialization" << std::endl;
     this->gameObjects = std::set<Character *>();
     this->data = "Lane";
     cellShape.setOutlineThickness(8.f);
     cellShape.setOutlineColor(sf::Color::Green);
+    std::cout << "End of lane initialization" << std::endl;
 }
 
 Lane::~Lane() {}
 
 void Lane::SetNumber(int number) {
-    std::cout << "Received number for lane : " << number << std::endl;
     this->number = number;
+    std::cout << "Received number for lane : " << number << std::endl;
 }
 
 std::set<Character *> Lane::GetEntities() {
@@ -75,7 +77,10 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
         cellShape.setPosition(i * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET);
         window.draw(cellShape);
         if (cells[i].sun) {
-            Lane::sunSprite->Draw(i * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET, window);
+            if (sunSprite!= nullptr)
+                Lane::sunSprite->Draw(i * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET, window);
+            else
+                std::cout << "SUNSPRITE IS NULL" << number << std::endl;
         }
     }
     std::list<Character *>::iterator it;
