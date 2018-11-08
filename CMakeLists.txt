@@ -41,8 +41,6 @@ add_executable(plantVsZombies
         Entities/PlantProjectile.cpp
         Entities/EntityFactory.h
         Entities/EntityFactory.cpp
-        MonsterFactory.cpp
-        MonsterFactory.h
         Graphics/SpriteFactory.cpp
         Graphics/SpriteFactory.hh
         Graphics/ImageModel.cpp

@@ -16,12 +16,13 @@ GameLoop::GameLoop(sf::RenderWindow &window) {
     this->input = new Input(Types::ButtonUp, sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 
     this->text = new sf::Text();
-    if (font.loadFromFile("../Graphics/Resources/Fonts/Arial.ttf")) {
+    this->font = new sf::Font();
+    if (font->loadFromFile("../Graphics/Resources/Fonts/Arial.ttf")) {
         std::cout << "Found font" << std::endl;
     } else {
         std::cout << "Problem setting font" << std::endl;
     }
-    this->text->setFont(font);
+    this->text->setFont(*font);
     this->text->setString("Start");
     std::cout << "End of the gameloop initialization" << std::endl;
 }
@@ -59,15 +60,11 @@ void GameLoop::run() {
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
 
-//    text.setFont(this->font);
-//    text.setFillColor(sf::Color::Yellow);
-//    text.setCharacterSize(24);
-//    text.setStyle(sf::Text::Bold);
+    text->setStyle(sf::Text::Bold);
     text->setPosition(850, 20);
 
-    std::cout << "Starting manager" << std::endl;
-    manager->Start();
 
+    manager->Start();
     while (running) {
         manager->Update();
 
@@ -98,12 +95,15 @@ void GameLoop::run() {
         window->clear();
 
 
-//        if (manager->GetStartedTime() > 0) {
-//            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
-//            std::string toast = "FPS : " + std::to_string(fps);
-//            text.setString(toast);
-//        }
+        if (manager->GetStartedTime() > 0) {
+            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
+            std::string toast = "FPS : " + std::to_string(fps);
+            text->setString(toast);
+        }
 //        std::cout << "Before text !" << std::endl;
+        std::string textString = text->getString();
+        std::cout << "text -> string   " << textString << std::endl;
+        std::cout << "Starting manager" << std::endl;
         window->draw(*text);
 //        std::cout << "After text !" << std::endl;
         scene->Draw(leftover, *(window)); // Graphics are drawn using an interpolation between current and next step
