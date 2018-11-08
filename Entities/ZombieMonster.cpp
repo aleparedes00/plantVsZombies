@@ -38,7 +38,6 @@ void ZombieMonster::CheckEndGame() {
 void ZombieMonster::Update()
 {
     this->X -= this->speed;
-    //std::cout << "groooarrr je suis un zombie ! " << this->X << std::endl;
     this->CheckEndGame();
 }
 

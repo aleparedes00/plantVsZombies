@@ -47,7 +47,6 @@ void Lane::Notify(AbstractEntity *entity) {
 
 void Lane::Notify(Character *character) {
     if (character->GetLife() <= 0){
-        std::cout << "Removing character of type " << character->GetData() << std::endl;
         toDelete.insert(character);
     }
 }
@@ -57,15 +56,6 @@ void Lane::AddEntity(Character *entity) {
     entity->SetLane(this);
     entity->SetY(number * CELL_SPACING + Y_OFFSET);
     this->gameObjects.insert(entity);
-}
-
-void Lane::RemoveEntity(Character *entity) {
-    if (gameObjects.find(entity) != gameObjects.end()) {
-        std::cout << "Removing character of type " <<entity->GetData() << " from lane " << number << std::endl;
-        this->gameObjects.erase(entity);
-    } else {
-        std::cout << "--- DEBUG : Entity not found in set !" << std::endl;
-    }
 }
 
 void Lane::Update() {

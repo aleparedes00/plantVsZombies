@@ -32,7 +32,6 @@ void Character::Draw(double leftover, sf::RenderWindow &window)
 void Character::GetDamaged(int damage) {
     this->life -= damage;
     if (this->life <= 0) {
-        std::cout << "groooarrr je mourru ! " << this->data << std::endl;
         this->NotifyAll();
     }
 }
@@ -42,7 +41,6 @@ void Character::NotifyAll()
     list<IObserver*>::iterator it;
     for (it = this->observers.begin(); it != this->observers.end(); it++)
         (*it)->Notify(this);
-    std::cout << "After Character " << this->data << " notify all" << std::endl;
 }
 std::string Character::GetData() const
 {
@@ -95,7 +93,6 @@ void Character::SetLife(int new_life)
 {
     this->life = new_life;
     if (this->life <= 0) {
-        std::cout << "groooarrr je mourru ! " << this->data << std::endl;
         this->NotifyAll();
     }
 }

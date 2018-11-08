@@ -91,7 +91,6 @@ void Scene::Notify(AbstractEntity *entity) {
 void Scene::Notify(Character *character) {
     if (character->GetX() <= 0)
         this->defeat = true;
-    std::cout << "After Scene character Notify" << std::endl;
 }
 
 Player* Scene::GetPlayer(){
