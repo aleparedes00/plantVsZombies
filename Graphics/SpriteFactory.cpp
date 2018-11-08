@@ -17,7 +17,7 @@ ImageModel *SpriteFactory::CreateImage(std::string data, float positionX, float 
             std::cout << "The zombie image didn't load" << std::endl;
             return nullptr;
         } else {
-            std::cout << "Zombie image found" << std::endl;
+            //std::cout << "Zombie image found" << std::endl;
         }
     }
     else if (data == "sun") {
@@ -26,7 +26,7 @@ ImageModel *SpriteFactory::CreateImage(std::string data, float positionX, float 
             std::cout << "The sun image didn't load" << std::endl;
             return nullptr;
         } else {
-            std::cout << "Sun image found" << std::endl;
+            //std::cout << "Sun image found" << std::endl;
         }
         //auto size = this->sprite.getTexture()->getSize();
         //auto scale_x = size.x/LANE_WIDTH;
@@ -37,7 +37,7 @@ ImageModel *SpriteFactory::CreateImage(std::string data, float positionX, float 
         return nullptr;
     }
     if (sprite != nullptr) {
-        std::cout << ">>>> Returning a new image " << std::endl;
+        //std::cout << ">>>> Returning a new image " << std::endl;
         return new ImageModel(sprite, texture);
     }
     return nullptr;
@@ -49,7 +49,7 @@ float SpriteFactory::CastDoubleToFloat(double x){
 
 sf::Sprite *SpriteFactory::SetZombieSprite(sf::Sprite *sprite) {
     sprite->setScale(0.104, 0.104);
-    std::cout << ">>>> Returning a zombie sprite " << std::endl;
+    //std::cout << ">>>> Returning a zombie sprite " << std::endl;
     return sprite;
 }
 
@@ -58,7 +58,7 @@ sf::Sprite *SpriteFactory::SetSunSprite(sf::Sprite *sprite){
     //auto scale_x = size.x/LANE_WIDTH;
     //auto scale_y = size.y/LANE_WIDTH;
     sprite->setScale(0.07, 0.07);
-    std::cout << ">>>> Returning a sun sprite " << std::endl;
+    //std::cout << ">>>> Returning a sun sprite " << std::endl;
     return sprite;
 }
 

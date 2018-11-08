@@ -104,8 +104,12 @@ void Scene::HandleInput(Input input) {
         int laneNumber = (double)((input.GetY() - Y_OFFSET) / CELL_SPACING);
         if (laneNumber <= LANE_NUMBER){
             lanes[laneNumber]->HandleInput(input);
-        }
-    }
+            if (input.GetType() == Types::RightButtonPressed)
+                std::cout << "Letting lane " << laneNumber << " handle input" << std::endl;
+        } else if (input.GetType() == Types::RightButtonPressed)
+            std::cout << "lane not found : " << laneNumber << std::endl;
+    } else if (input.GetType() == Types::RightButtonPressed)
+        std::cout << "Point not found or input before X_OFFSET" << std::endl;
 }
 
 bool Scene::CheckDefeat() {

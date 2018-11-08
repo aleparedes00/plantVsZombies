@@ -13,6 +13,7 @@ GameLoop::GameLoop(sf::RenderWindow &window) {
     std::cout << "Start of the gameloop initialization" << std::endl;
     this->running = true;
     this->window = &window;
+    this->input = new Input(Types::ButtonUp, sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 //    this->text = sf::Text();
 //    if (font.loadFromFile("Graphics/Resources/Fonts/Arial.ttf")) {
 //        std::cout << "Found font" << std::endl;
@@ -41,7 +42,7 @@ void GameLoop::EventToInput(sf::Event event) {
             this->input = new Input(Types::LeftButtonPressed, sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
         } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
             this->input = new Input(Types::RightButtonPressed, sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
-            std::cout << "Right" << std::endl;
+            std::cout << "Right : " << sf::Mouse::getPosition(*window).x << " | " << sf::Mouse::getPosition(*window).y << std::endl;
         }
     }
 }
@@ -82,7 +83,7 @@ void GameLoop::run() {
         //std::cout << "End of pollEvent" << std::endl;
 
         while (lag >= step) { // UPDATE LOOP. Physics happen here at fixed time steps. This means no one calls GetElapsedTime from the Time Manager.
-            scene->Update(*(input));
+            scene->Update(*input);
             lag -= step;
             loops++;
         }

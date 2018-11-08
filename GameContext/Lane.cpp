@@ -47,8 +47,10 @@ void Lane::Notify(AbstractEntity *entity) {
 }
 
 void Lane::Notify(Character *character) {
-    if (character->GetLife() <= 0)
+    if (character->GetLife() <= 0){
+        std::cout << "Removing character of type " << character->GetData() << std::endl;
         this->RemoveEntity(character);
+    }
 }
 
 void Lane::AddEntity(Character *entity) {
@@ -60,6 +62,7 @@ void Lane::AddEntity(Character *entity) {
 
 void Lane::RemoveEntity(Character *entity) {
     if (gameObjects.find(entity) != gameObjects.end()) {
+        std::cout << "Removing character of type " <<entity->GetData() << " from lane " << number << std::endl;
         this->gameObjects.erase(entity);
     } else {
         std::cout << "--- DEBUG : Entity not found in set !" << std::endl;
@@ -92,24 +95,43 @@ void Lane::Draw(double leftover, sf::RenderWindow &window) {
 
 
 void Lane::HandleInput(Input input) {
+    if(InputOnCell(input)) {
+        int cellNumber = (double)((input.GetX() - X_OFFSET) / CELL_SPACING);
+        if (CellHasSun(cellNumber) && input.GetType() == Types::LeftButtonPressed) {
+            CollectSuns(cellNumber);
+        } else if (CellEmpty(cellNumber) && input.GetType() == Types::RightButtonPressed){
+            CreatePlant(cellNumber);
+        }
+
+    }
+}
+
+bool Lane::InputOnCell(Input input) {
+    bool onCell = false;
     double point = std::max((double)((input.GetX() - X_OFFSET) % CELL_SPACING), 0.0);
     if (point <= CELL_SIZE && input.GetX() > X_OFFSET) {
         int cellNumber = (double)((input.GetX() - X_OFFSET) / CELL_SPACING);
         if (cellNumber < CELL_NUMBER){
-            if (CellHasSun(cellNumber) && input.GetType() == Types::LeftButtonPressed) {
-                RemoveSun(cellNumber);
-                Player::AddSuns();
-                std::cout << "Praise the Sun, Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
-            } else if (CellEmpty(cellNumber) && input.GetType() == Types::RightButtonPressed){
-                Character *plant = Player::GetPlant(cellNumber * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET);
-                if (plant != nullptr) {
-                    cells[cellNumber].empty = false;
-                    this->AddEntity(plant);
-                    plant->SetLane(this);
-                    std::cout << "Creating plant ! Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
-                }
-            }
+            onCell = true;
         }
+    }
+    return onCell;
+}
+
+void Lane::CollectSuns(int cellNumber) {
+    RemoveSun(cellNumber);
+    Player::AddSuns();
+    std::cout << "Praise the Sun, Cell : " << cellNumber << " || Lane : " << this->number << std::endl;
+}
+
+void Lane::CreatePlant(int cellNumber) {
+    Character *plant = Player::GetPlant(cellNumber * CELL_SPACING + X_OFFSET, number * CELL_SPACING + Y_OFFSET);
+    if (plant != nullptr) {
+        cells[cellNumber].empty = false;
+        this->AddEntity(plant);
+        plant->SetLane(this);
+    } else {
+        std::cout << "Got a nullptr instead of a plant " << std::endl;
     }
 }
 

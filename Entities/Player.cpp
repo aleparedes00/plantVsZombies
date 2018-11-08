@@ -6,8 +6,8 @@
 
 #include "Player.h"
 #include "EntityFactory.h"
-#define SUN_ADD 10
-#define PLANT_PRICE 20
+#define SUN_ADD 100
+#define PLANT_PRICE 2
 
 int Player::suns = 0;
 Scene *Player::scene;

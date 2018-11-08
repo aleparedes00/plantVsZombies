@@ -34,6 +34,9 @@ private:
     void Notify(IObservable*);
     void Notify(AbstractEntity*);
     void Notify(Character*);
+    bool InputOnCell(Input);
+    void CollectSuns(int);
+    void CreatePlant(int);
 public:
     Lane();
     ~Lane();

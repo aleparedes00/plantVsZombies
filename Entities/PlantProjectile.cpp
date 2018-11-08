@@ -17,6 +17,7 @@ PlantProjectile::~PlantProjectile() {
 void PlantProjectile::Update() {
     this->X += this->speed;
     if (this->X > 1000) {
+        std::cout << "groooarrr je mourru ! " << this->data << std::endl;
         this->life = -1;
         NotifyAll();
     }
