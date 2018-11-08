@@ -18,7 +18,7 @@
 // Cell configuation
 
 #define CELL_SIZE 50
-#define CELL_INTERVAL 40
+#define CELL_INTERVAL 30
 #define CELL_SPACING (CELL_SIZE + CELL_INTERVAL)
 #define Y_OFFSET 200
 #define X_OFFSET 20

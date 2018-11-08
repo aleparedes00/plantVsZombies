@@ -31,6 +31,7 @@ public:
     virtual ~Character() = 0;
     virtual std::string GetData() const;
     virtual void Draw(double, sf::RenderWindow&);
+    virtual void GetDamaged(int);
     virtual double GetX() const;
     virtual double GetY() const;
     virtual double GetSpeed() const;
@@ -38,6 +39,7 @@ public:
     virtual void SetX(double);
     virtual void SetY(double);
     virtual void SetImage(ImageModel*);
+    virtual ImageModel GetImage();
     virtual void SetSpeed(double);
     virtual void SetLife(int);
     virtual void SetLane(Lane*);

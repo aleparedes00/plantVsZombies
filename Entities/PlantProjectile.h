@@ -9,6 +9,10 @@
 #include "../Config.h"
 
 class PlantProjectile : public Character {
+private:
+    bool Intersects(Character*);
+    void CheckCollision();
+    sf::CircleShape shape;
 public:
     PlantProjectile();
     ~PlantProjectile();

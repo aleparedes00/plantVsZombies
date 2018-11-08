@@ -25,3 +25,7 @@ void ImageModel::Draw(Character *character, double leftover, sf::RenderWindow &w
     this->sprite->setPosition(character->GetX() + (character->GetSpeed() * leftover), character->GetY());
     window.draw(*sprite);
 }
+
+sf::Sprite ImageModel::GetSprite() {
+    return *sprite;
+}

@@ -99,17 +99,19 @@ Player* Scene::GetPlayer(){
 }
 
 void Scene::HandleInput(Input input) {
-    double point = std::max((double)((input.GetY() - Y_OFFSET) % CELL_SPACING), 0.0);
-    if (point <= CELL_SIZE && input.GetX() > X_OFFSET) {
-        int laneNumber = (double)((input.GetY() - Y_OFFSET) / CELL_SPACING);
-        if (laneNumber <= LANE_NUMBER){
-            lanes[laneNumber]->HandleInput(input);
-            if (input.GetType() == Types::RightButtonPressed)
-                std::cout << "Letting lane " << laneNumber << " handle input" << std::endl;
+    if (input.GetType() != Types::ButtonUp) {
+        double point = std::max((double)((input.GetY() - Y_OFFSET) % CELL_SPACING), 0.0);
+        if (point <= CELL_SIZE && input.GetX() > X_OFFSET) {
+            int laneNumber = (double)((input.GetY() - Y_OFFSET) / CELL_SPACING);
+            if (laneNumber < LANE_NUMBER){
+                lanes[laneNumber]->HandleInput(input);
+                if (input.GetType() == Types::RightButtonPressed)
+                    std::cout << "Letting lane " << laneNumber << " handle input" << std::endl;
+            } else if (input.GetType() == Types::RightButtonPressed)
+                std::cout << "lane not found : " << laneNumber << std::endl;
         } else if (input.GetType() == Types::RightButtonPressed)
-            std::cout << "lane not found : " << laneNumber << std::endl;
-    } else if (input.GetType() == Types::RightButtonPressed)
-        std::cout << "Point not found or input before X_OFFSET" << std::endl;
+            std::cout << "Point not found or input before X_OFFSET" << std::endl;
+    }
 }
 
 bool Scene::CheckDefeat() {

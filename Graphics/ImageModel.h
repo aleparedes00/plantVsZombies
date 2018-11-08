@@ -25,6 +25,8 @@ public:
     void Draw(float, float, sf::RenderWindow &);
 
     void Draw(Character *, double, sf::RenderWindow &);
+
+    sf::Sprite GetSprite();
 };
 
 

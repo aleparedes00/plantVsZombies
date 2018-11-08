@@ -20,7 +20,6 @@ sf::RectangleShape Lane::cellShape = sf::RectangleShape(sf::Vector2f(CELL_SIZE, 
 
 Lane::Lane() {
     std::cout << "Start of lane initialization" << std::endl;
-    this->gameObjects = std::set<Character *>();
     this->data = "Lane";
     cellShape.setOutlineThickness(8.f);
     cellShape.setOutlineColor(sf::Color::Green);
@@ -49,7 +48,7 @@ void Lane::Notify(AbstractEntity *entity) {
 void Lane::Notify(Character *character) {
     if (character->GetLife() <= 0){
         std::cout << "Removing character of type " << character->GetData() << std::endl;
-        this->RemoveEntity(character);
+        toDelete.insert(character);
     }
 }
 
@@ -73,6 +72,10 @@ void Lane::Update() {
     for (auto entity : gameObjects) {
         entity->Update();
     }
+    for (auto entity : toDelete) {
+        gameObjects.erase(entity);
+    }
+    toDelete.clear();
 }
 
 void Lane::Draw(double leftover, sf::RenderWindow &window) {

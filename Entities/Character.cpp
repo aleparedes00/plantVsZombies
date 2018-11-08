@@ -17,8 +17,7 @@ Character::Character()
 
 Character::~Character()
 {
-    if (this->image != nullptr)
-        delete this->image;
+    delete this->image;
 }
 
 void Character::Draw(double leftover, sf::RenderWindow &window)
@@ -27,6 +26,14 @@ void Character::Draw(double leftover, sf::RenderWindow &window)
         this->image->Draw(this, leftover, window);
     else {
         std::cout << "Empty image for character of type " << this->data << std::endl;
+    }
+}
+
+void Character::GetDamaged(int damage) {
+    this->life -= damage;
+    if (this->life <= 0) {
+        std::cout << "groooarrr je mourru ! " << this->data << std::endl;
+        this->NotifyAll();
     }
 }
 
@@ -49,6 +56,11 @@ double Character::GetY() const
 {
     return this->Y;
 }
+
+ImageModel Character::GetImage(){
+    return *image;
+}
+
 double Character::GetSpeed() const
 {
     return this->speed;

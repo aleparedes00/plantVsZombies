@@ -28,6 +28,7 @@ private:
     static ImageModel* sunSprite;
     static sf::RectangleShape cellShape;
     std::set<Character*> gameObjects;
+    std::set<Character*> toDelete;
     std::string data;
     CELL cells[CELL_NUMBER];
     void RemoveEntity(Character*);
