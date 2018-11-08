@@ -25,7 +25,7 @@ GameLoop::GameLoop(sf::RenderWindow &window) {
     this->text->setFont(*font);
     this->text->setString("Start");
     text->setStyle(sf::Text::Bold);
-    text->setPosition(850, 20);
+    text->setPosition(350, 20);
     std::cout << "End of the gameloop initialization" << std::endl;
 }
 
@@ -61,6 +61,8 @@ void GameLoop::run() {
     const double step = 33; // DO NOT MODIFY, THIS IS THE SPEED OF THE GAME, or called time step
     double leftover = 0; // Time left between two gameplay updates
     double deltaTime;
+    int secondsSinceStart = 0;
+    int fps = 0;
 
 
     std::cout << "Starting manager" << std::endl;
@@ -95,9 +97,10 @@ void GameLoop::run() {
         window->clear();
 
 
-        if (manager->GetStartedTime() > 0) {
-            int fps = totalLooops / (manager->GetStartedTime() / 1000.0);
-            std::string toast = "FPS : " + std::to_string(fps);
+        if (secondsSinceStart < (GameLoop::GetStartedTime() / 1000.0)) {
+            fps = 1000 / deltaTime;
+            secondsSinceStart++;
+            std::string toast = "Time : " + std::to_string(secondsSinceStart) +  "                         FPS : " + std::to_string(fps);
             text->setString(toast);
         }
 //        std::cout << "Before text !" << std::endl;

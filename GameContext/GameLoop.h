@@ -15,6 +15,7 @@ class GameLoop {
 private:
     sf::Font *font;
     sf::Text *text;
+    sf::Text *text2;
     sf::RenderWindow *window;
     bool running;
     Input* input;

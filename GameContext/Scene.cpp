@@ -57,9 +57,9 @@ void Scene::Update(Input input) {
     this->HandleInput(input);
     this->player->SetInput(input);
     if (this->wave < (GameLoop::GetStartedTime() / 1000.0) / TIME_BETWEEN_WAVES){
-        this->remainingZombies += pow(2, this->wave);
+        this->remainingZombies += this->wave;
         this->wave++;
-        std::cout << "Starting wave : " << this->wave << " with " << std::pow(2, this->wave) << " max zombies" <<std::endl;
+        std::cout << "Starting wave : " << this->wave << " with " << (remainingZombies + zombies) << " max zombies" <<std::endl;
     }
     fullLanes = true;
     for (auto &lane : lanes) { // Loop used to check if lanes are full or not
@@ -125,8 +125,9 @@ void Scene::SpawnMonster() {
     else if ((GameLoop::GetStartedTime() / 1000.0) >= this->nextZombieSpawn) {
         Character *zombie = EntityFactory::Create("ZombieMonster");
         zombie->AddObserver(this);
+        zombie->SetLife(zombie->GetLife() + pow(2, wave));
         lanes[random_lane]->AddEntity(zombie);
-        nextZombieSpawn = 0.5 + std::min((rng(gen) * (TIME_BETWEEN_WAVES / remainingZombies)), 0.3) + (GameLoop::GetStartedTime() / 1000.0);
+        nextZombieSpawn = std::min((rng(gen) * (TIME_BETWEEN_WAVES / remainingZombies)), 0.3) + (GameLoop::GetStartedTime() / 1000.0);
         this->zombies++;
         this->remainingZombies--;
         std::cout << "Entities : " << this->zombies << " || Remaining zombies : " << this->remainingZombies << std::endl;
