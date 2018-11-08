@@ -7,13 +7,14 @@
 #include <iostream>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
+#include "Graphics/SpriteFactory.hh"
 #include "../json.hpp"
 #include "../Entities/Character.h"
 #include "../Entities/Player.h"
 
 using json = nlohmann::json;
 
-ModelSprite *Lane::sunSprite = new ModelSprite("sun", 0, 0);
+SpriteFactory *Lane::sunSprite = new SpriteFactory("sun", 0, 0);
 sf::RectangleShape Lane::cellShape = sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 
 Lane::Lane() {

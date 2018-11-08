@@ -12,9 +12,9 @@
 #include "../Entities/Character.h"
 #include "Input.h"
 #include "../Config.h"
-#include "../Graphics/ModelSprite.hh"
+#include "Graphics/SpriteFactory.hh"
 
-class ModelSprite;
+class SpriteFactory;
 
 struct CELL {
     bool sun = false;
@@ -25,7 +25,7 @@ class Lane : public IObserver{
 private:
     int number;
     bool full;
-    static ModelSprite* sunSprite;
+    static SpriteFactory* sunSprite;
     static sf::RectangleShape cellShape;
     std::set<Character*> gameObjects;
     std::string data;

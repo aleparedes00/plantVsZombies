@@ -6,13 +6,13 @@
 #define PLANTSVSZOMBIES_ZOMBIEMONSTER_H
 
 #include "Character.h"
-#include "../Graphics/ModelSprite.hh"
+#include "Graphics/SpriteFactory.hh"
 
 class ZombieMonster: public Character
 {
 private:
     void CheckEndGame();
-    ModelSprite *sprite;
+    SpriteFactory *sprite;
 public:
     ZombieMonster();
     ~ZombieMonster();

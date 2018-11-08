@@ -29,7 +29,7 @@
 #define X_OFFSET 20
 
 // Graphics files
-#define ZOMBIE_SPRITE "Graphics/Resources/Images/zombie2.png"
-#define SUN_SPRITE "Graphics/Resources/Images/sun.png"
+#define ZOMBIE_SPRITE "../Graphics/Resources/Images/zombie2.png"
+#define SUN_SPRITE "../Graphics/Resources/Images/sun.png"
 
 #endif //PLANTSVSZOMBIES_CONFIG_H
